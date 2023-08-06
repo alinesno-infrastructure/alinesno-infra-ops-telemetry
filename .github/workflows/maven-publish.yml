@@ -20,7 +20,7 @@ jobs:
       BUILD_NUMBER: ${{ github.run_number }}
 
       # 接收端项目
-      RECEIVE_PROJECT_NAME: 'alinesno-infra-ops-telemetry-receive'
+      RECEIVE_PROJECT_NAME: 'alinesno-infra-ops-telemetry-receiver'
 
       # 容器镜像
       ALIYUN_CR_REGISTORY: 'registry.cn-shenzhen.aliyuncs.com'

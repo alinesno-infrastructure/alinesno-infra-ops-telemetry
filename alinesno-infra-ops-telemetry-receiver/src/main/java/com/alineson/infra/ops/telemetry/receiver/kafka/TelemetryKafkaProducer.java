@@ -5,11 +5,11 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaProducer {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+public class TelemetryKafkaProducer {
+    protected final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
+    public TelemetryKafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

@@ -35,7 +35,7 @@ public class TracesHandler extends TraceServiceGrpc.TraceServiceImplBase {
      */
     @Override
     public void export(ExportTraceServiceRequest request, StreamObserver<ExportTraceServiceResponse> responseObserver) {
-        logger.debug("export");
+        System.out.println(this.getClass().getName());
 
         for (ResourceSpans resourceSpans : request.getResourceSpansList()) {
 

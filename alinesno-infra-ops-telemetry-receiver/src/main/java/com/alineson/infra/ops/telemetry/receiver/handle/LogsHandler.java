@@ -34,6 +34,9 @@ public class LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
     @Override
     public void export(ExportLogsServiceRequest request, StreamObserver<ExportLogsServiceResponse> responseObserver) {
         logger.debug("export");
+
+        System.out.println(this.getClass().getName());
+
         for (ResourceLogs resourceLogs : request.getResourceLogsList()) {
             for (ScopeLogs scopeLogs : resourceLogs.getScopeLogsList()) {
                 for (LogRecord logRecord : scopeLogs.getLogRecordsList()) {

@@ -35,6 +35,9 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
      */
     @Override
     public void export(ExportMetricsServiceRequest request, StreamObserver<ExportMetricsServiceResponse> responseObserver) {
+
+        System.out.println(this.getClass().getName());
+
         for (ResourceMetrics resourceMetrics : request.getResourceMetricsList()) {
 
             logger.debug("Resource: " + resourceMetrics.getResource().getAttributesList().stream().map(kv -> kv.getKey() + ":" + kv.getValue().getStringValue()).collect(Collectors.joining(",")));

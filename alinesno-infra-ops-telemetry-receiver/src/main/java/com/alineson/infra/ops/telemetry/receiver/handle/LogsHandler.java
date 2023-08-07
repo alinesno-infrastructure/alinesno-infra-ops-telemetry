@@ -1,5 +1,6 @@
 package com.alineson.infra.ops.telemetry.receiver.handle;
 
+import com.alineson.infra.ops.telemetry.receiver.enums.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
 import io.grpc.stub.StreamObserver;
 import io.opentelemetry.proto.collector.logs.v1.ExportLogsServiceRequest;
@@ -47,7 +48,12 @@ public class LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
                 }
             }
         }
+
         responseObserver.onNext(ExportLogsServiceResponse.newBuilder().build());
         responseObserver.onCompleted();
+
+        // Send To Kafka
+        kafkaProducer.sendMessage(Constants.MQ_LOG_TOPIC , request.getResourceLogsList());
+
     }
 }

@@ -22,6 +22,12 @@
 			<version>${revision}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>io.opentelemetry.proto</groupId>
+			<artifactId>opentelemetry-proto</artifactId>
+			<version>0.20.0-alpha</version>
+		</dependency>
+
 	</dependencies>
 
 </project>

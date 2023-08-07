@@ -1,5 +1,6 @@
 package com.alineson.infra.ops.telemetry.receiver.handle;
 
+import com.alineson.infra.ops.telemetry.receiver.enums.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
 import io.grpc.stub.StreamObserver;
 import io.opentelemetry.proto.collector.metrics.v1.ExportMetricsServiceRequest;
@@ -39,20 +40,18 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
         System.out.println(this.getClass().getName());
 
         for (ResourceMetrics resourceMetrics : request.getResourceMetricsList()) {
-
             logger.debug("Resource: " + resourceMetrics.getResource().getAttributesList().stream().map(kv -> kv.getKey() + ":" + kv.getValue().getStringValue()).collect(Collectors.joining(",")));
-
             for (ScopeMetrics scopeMetrics : resourceMetrics.getScopeMetricsList()) {
-
                 logger.debug("Scope: " + scopeMetrics.getScope().getName() + ":" + scopeMetrics.getScope().getVersion());
-
                 for (Metric metric : scopeMetrics.getMetricsList()) {
-
                     logger.info("Metric: " + metric.getName() + ", unit=" + metric.getUnit());
                 }
             }
         }
         responseObserver.onNext(ExportMetricsServiceResponse.newBuilder().build());
         responseObserver.onCompleted();
+
+        // Send To Kafka
+        kafkaProducer.sendMessage(Constants.MQ_METRICS_TOPIC, request.getResourceMetricsList());
     }
 }

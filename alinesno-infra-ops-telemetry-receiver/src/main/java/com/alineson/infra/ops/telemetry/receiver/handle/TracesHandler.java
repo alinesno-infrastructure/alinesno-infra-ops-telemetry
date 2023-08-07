@@ -1,5 +1,6 @@
 package com.alineson.infra.ops.telemetry.receiver.handle;
 
+import com.alineson.infra.ops.telemetry.receiver.enums.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
 import io.grpc.stub.StreamObserver;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest;
@@ -38,21 +39,18 @@ public class TracesHandler extends TraceServiceGrpc.TraceServiceImplBase {
         System.out.println(this.getClass().getName());
 
         for (ResourceSpans resourceSpans : request.getResourceSpansList()) {
-
             logger.debug("Resource: " + resourceSpans.getResource().getAttributesList().stream().map(kv -> kv.getKey() + ":" + kv.getValue().getStringValue()).collect(Collectors.joining(",")));
-
             for (ScopeSpans scopeSpans : resourceSpans.getScopeSpansList()) {
-
                 logger.debug("Scope: " + scopeSpans.getScope().getName() + ":" + scopeSpans.getScope().getVersion());
-
                 for (Span span : scopeSpans.getSpansList()) {
-
                     logger.info("Span: " + span.getName() + ", starts=" + span.getStartTimeUnixNano());
-
                 }
             }
         }
         responseObserver.onNext(ExportTraceServiceResponse.newBuilder().build());
         responseObserver.onCompleted();
+
+        // Send To Kafka
+        kafkaProducer.sendMessage(Constants.MQ_TRACE_TOPIC, request.getResourceSpansList());
     }
 }

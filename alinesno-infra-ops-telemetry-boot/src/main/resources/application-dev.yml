@@ -5,6 +5,9 @@ server:
 spring:
   application:
     name: alinesno-infra-ops-logback-boot
+  profiles:
+    include:
+      - kafka
   devtools:
     restart:
       enabled: true

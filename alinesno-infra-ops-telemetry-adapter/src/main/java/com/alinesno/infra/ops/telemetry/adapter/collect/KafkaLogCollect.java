@@ -1,6 +1,6 @@
 package com.alinesno.infra.ops.telemetry.adapter.collect;
 
-import com.alinesno.infra.base.notice.enums.Constants;
+import com.alinesno.infra.ops.telemetory.enums.Constants;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.LoggerFactory;

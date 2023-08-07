@@ -1,0 +1,61 @@
+package com.alinesno.infra.ops.telemetory.api.controller;
+
+import com.alinesno.infra.common.core.constants.SpringInstanceScope;
+import com.alinesno.infra.common.core.rest.BaseController;
+import com.alinesno.infra.common.facade.pageable.DatatablesPageBean;
+import com.alinesno.infra.common.facade.pageable.TableDataInfo;
+import com.alinesno.infra.ops.telemetory.entity.MetricsHistogram;
+import com.alinesno.infra.ops.telemetory.service.IMetricsHistogramService;
+import io.swagger.annotations.Api;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * 处理与直方图信息相关的请求的Controller。
+ * 继承自BaseController类并实现IMetricsHistogramService接口。
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author luoxiaodong
+ */
+@Api(tags = "直方图信息")
+@RestController
+@Scope(SpringInstanceScope.PROTOTYPE)
+@RequestMapping("/api/infra/simple/crm/metricsHistogram")
+public class MetricsHistogramController extends BaseController<MetricsHistogram, IMetricsHistogramService> {
+
+    // 日志记录
+    private static final Logger log = LoggerFactory.getLogger(MetricsHistogramController.class);
+
+    @Autowired
+    private IMetricsHistogramService service;
+
+    /**
+     * 获取直方图信息的DataTables数据。
+     *
+     * @param request HttpServletRequest对象。
+     * @param model Model对象。
+     * @param page DatatablesPageBean对象。
+     * @return 包含DataTables数据的TableDataInfo对象。
+     */
+    @ResponseBody
+    @PostMapping("/datatables")
+    public TableDataInfo datatables(HttpServletRequest request, Model model, DatatablesPageBean page) {
+        log.debug("page = {}", ToStringBuilder.reflectionToString(page));
+        return this.toDataInfo(model, this.getFeign(), page);
+    }
+
+    @Override
+    public IMetricsHistogramService getFeign() {
+        return this.service;
+    }
+}

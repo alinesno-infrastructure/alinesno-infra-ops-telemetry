@@ -5,9 +5,27 @@ server:
 spring:
   application:
     name: alinesno-infra-ops-logback-boot
-  profiles:
-    include:
-      - kafka
+  datasource:
+    driver-class-name: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/dev_alinesno_infra_ops_telemetry_v100?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&serverTimezone=GMT
+    username: root
+    password: adminer
+  data:
+    redis:
+     host: 127.0.0.1
+     port: 6379
+     password: admin
+     timeout: 10s
+  kafka:
+    bootstrap-servers:
+      - 192.168.101.18:9092
+    consumer:
+      group-id: 1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      max-poll-records: 500
   devtools:
     restart:
       enabled: true

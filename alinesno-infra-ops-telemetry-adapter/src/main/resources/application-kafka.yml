@@ -1,7 +1,11 @@
 spring:
   kafka:
     bootstrap-servers:
-      - 192.20.12.12:9092
-      - 172.012.3.12:9092
+    - 192.168.101.18:9092
     consumer:
-      group-id: demo
+      group-id: 1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      max-poll-records: 500

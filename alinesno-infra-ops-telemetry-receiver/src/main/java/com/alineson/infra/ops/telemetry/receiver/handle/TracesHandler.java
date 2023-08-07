@@ -1,7 +1,8 @@
 package com.alineson.infra.ops.telemetry.receiver.handle;
 
-import com.alinesno.infra.ops.telemetory.enums.Constants;
+import com.alineson.infra.ops.telemetry.receiver.constants.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
+import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceResponse;
@@ -36,7 +37,8 @@ public class TracesHandler extends TraceServiceGrpc.TraceServiceImplBase {
      */
     @Override
     public void export(ExportTraceServiceRequest request, StreamObserver<ExportTraceServiceResponse> responseObserver) {
-        System.out.println(this.getClass().getName());
+
+        logger.debug("metrics ===>>> {}" , new Gson().toJson(request.getResourceSpansList()));
 
         for (ResourceSpans resourceSpans : request.getResourceSpansList()) {
             logger.debug("Resource: " + resourceSpans.getResource().getAttributesList().stream().map(kv -> kv.getKey() + ":" + kv.getValue().getStringValue()).collect(Collectors.joining(",")));
@@ -51,6 +53,6 @@ public class TracesHandler extends TraceServiceGrpc.TraceServiceImplBase {
         responseObserver.onCompleted();
 
         // Send To Kafka
-        kafkaProducer.sendMessage(Constants.MQ_TRACE_TOPIC, request.getResourceSpansList());
+        TelemetryKafkaProducer.getInstance().sendMessage(Constants.MQ_TRACE_TOPIC, request.getResourceSpansList());
     }
 }

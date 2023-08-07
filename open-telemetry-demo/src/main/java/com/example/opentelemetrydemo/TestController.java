@@ -9,9 +9,7 @@ import java.util.Random;
 
 @RestController
 public class TestController {
-
     private static final Logger log = LoggerFactory.getLogger(TestController.class) ;
-
     @GetMapping("/testSpan")
     public String testSpan(String name) throws InterruptedException {
 
@@ -25,11 +23,11 @@ public class TestController {
         log.info("username = " + name);
         log.error("username = " + name);
 
-        Thread.sleep(randomNumber * 100);
+        // Thread.sleep(randomNumber * 100);
 
-        if(randomNumber % 5 == 0){
-            int i = randomNumber/10  ;
-        }
+        // if(randomNumber % 5 == 0){
+            // int i = randomNumber/10  ;
+        // }
 
         return "helloworld " + name ;
     }

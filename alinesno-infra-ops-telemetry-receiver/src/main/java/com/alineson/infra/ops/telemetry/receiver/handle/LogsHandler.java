@@ -1,7 +1,8 @@
 package com.alineson.infra.ops.telemetry.receiver.handle;
 
-import com.alinesno.infra.ops.telemetory.enums.Constants;
+import com.alineson.infra.ops.telemetry.receiver.constants.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
+import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import io.opentelemetry.proto.collector.logs.v1.ExportLogsServiceRequest;
 import io.opentelemetry.proto.collector.logs.v1.ExportLogsServiceResponse;
@@ -23,9 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    protected TelemetryKafkaProducer kafkaProducer;
-
     /**
      * 处理日志导出请求，并打印日志记录的内容。
      *
@@ -36,7 +34,7 @@ public class LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
     public void export(ExportLogsServiceRequest request, StreamObserver<ExportLogsServiceResponse> responseObserver) {
         logger.debug("export");
 
-        System.out.println(this.getClass().getName());
+        logger.debug("metrics ===>>> {}" , new Gson().toJson(request.getResourceLogsList()));
 
         for (ResourceLogs resourceLogs : request.getResourceLogsList()) {
             for (ScopeLogs scopeLogs : resourceLogs.getScopeLogsList()) {
@@ -53,7 +51,7 @@ public class LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
         responseObserver.onCompleted();
 
         // Send To Kafka
-        kafkaProducer.sendMessage(Constants.MQ_LOG_TOPIC , request.getResourceLogsList());
+        TelemetryKafkaProducer.getInstance().sendMessage(Constants.MQ_LOG_TOPIC, request.getResourceLogsList());
 
     }
 }

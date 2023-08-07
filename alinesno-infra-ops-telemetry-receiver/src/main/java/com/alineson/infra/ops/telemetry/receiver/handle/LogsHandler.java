@@ -1,6 +1,6 @@
 package com.alineson.infra.ops.telemetry.receiver.handle;
 
-import com.alineson.infra.ops.telemetry.receiver.enums.Constants;
+import com.alinesno.infra.base.notice.enums.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
 import io.grpc.stub.StreamObserver;
 import io.opentelemetry.proto.collector.logs.v1.ExportLogsServiceRequest;

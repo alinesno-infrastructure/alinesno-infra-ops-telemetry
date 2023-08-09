@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("resources")
+@TableName("metrics_resource")
 public class MetricsResource extends InfraBaseEntity {
 
     @TableField("resource_id")
@@ -22,4 +22,27 @@ public class MetricsResource extends InfraBaseEntity {
     @TableField("attribute")
     private String attribute ;
 
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
 }

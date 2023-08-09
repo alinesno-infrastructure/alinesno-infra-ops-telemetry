@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("attributes")
+@TableName("log_attribute")
 public class LogAttribute extends InfraBaseEntity {
 
     @TableField("record_id")

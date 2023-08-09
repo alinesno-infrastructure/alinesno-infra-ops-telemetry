@@ -1,8 +1,10 @@
 package com.alinesno.infra.ops.telemetry.entity;
 
 import com.alinesno.infra.common.facade.mapper.entity.InfraBaseEntity;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.util.List;
 
 /**
  * 表示 Span 实体。
@@ -10,7 +12,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("spans")
+@TableName("trace_span")
 public class TraceSpan extends InfraBaseEntity {
 
     @TableField("resource_id")
@@ -41,17 +43,10 @@ public class TraceSpan extends InfraBaseEntity {
     private int kind; // 跨度类型
 
     @TableField("attribute")
-    private String attribute ;
+    private List<String> attribute ;
 
     // 省略 getter 和 setter 方法
 
-    public String getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
-    }
 
     public String getResourceId() {
         return resourceId;
@@ -123,5 +118,13 @@ public class TraceSpan extends InfraBaseEntity {
 
     public void setKind(int kind) {
         this.kind = kind;
+    }
+
+    public List<String> getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(List<String> attribute) {
+        this.attribute = attribute;
     }
 }

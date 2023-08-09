@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("scopes")
+@TableName("log_scope")
 public class LogScope extends InfraBaseEntity {
     /**
      * 作用域名称。

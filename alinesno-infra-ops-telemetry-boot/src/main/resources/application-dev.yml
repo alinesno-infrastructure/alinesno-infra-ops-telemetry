@@ -4,12 +4,12 @@ server:
 # spring 配置
 spring:
   application:
-    name: alinesno-infra-ops-logback-boot
+    name: alinesno-infra-ops-telemetry-boot
   datasource:
-    driver-class-name: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/dev_alinesno_infra_ops_telemetry_v100?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&serverTimezone=GMT
-    username: root
-    password: adminer
+    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
+    url: jdbc:clickhouse://172.81.205.216:8123/default
+    username: default
+    password:
   data:
     redis:
      host: 127.0.0.1

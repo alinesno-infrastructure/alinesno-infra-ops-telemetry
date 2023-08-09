@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("scopes")
+@TableName("metrics_scope")
 public class MetricsScope extends InfraBaseEntity{
     /**
      * 范围名称。
@@ -33,4 +33,35 @@ public class MetricsScope extends InfraBaseEntity{
     @TableField("resource_id")
     private String resourceId; // 资源 ID
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(String attributes) {
+        this.attributes = attributes;
+    }
+
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
 }

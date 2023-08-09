@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("resources")
+@TableName("log_resources")
 public class LogResource extends InfraBaseEntity {
     @TableField("resource_id")
     private String resourceId; // 资源 ID

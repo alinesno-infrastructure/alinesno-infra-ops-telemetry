@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("scopes")
+@TableName("trace_scope")
 public class TraceScope extends InfraBaseEntity {
 
     @TableField("name")

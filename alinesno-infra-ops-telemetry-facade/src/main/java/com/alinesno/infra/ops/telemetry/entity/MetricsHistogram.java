@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("histograms")
+@TableName("metrics_histogram")
 public class MetricsHistogram extends InfraBaseEntity {
     /**
      * 直方图桶列表。

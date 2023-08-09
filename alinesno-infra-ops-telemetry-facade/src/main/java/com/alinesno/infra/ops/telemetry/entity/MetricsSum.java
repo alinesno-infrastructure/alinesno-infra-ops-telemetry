@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("sums")
+@TableName("metrics_sum")
 public class MetricsSum extends InfraBaseEntity {
 
     @TableField("span_id")
@@ -35,5 +35,29 @@ public class MetricsSum extends InfraBaseEntity {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public String getSpanId() {
+        return spanId;
+    }
+
+    public void setSpanId(String spanId) {
+        this.spanId = spanId;
+    }
+
+    public String getScopeId() {
+        return scopeId;
+    }
+
+    public void setScopeId(String scopeId) {
+        this.scopeId = scopeId;
+    }
+
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
     }
 }

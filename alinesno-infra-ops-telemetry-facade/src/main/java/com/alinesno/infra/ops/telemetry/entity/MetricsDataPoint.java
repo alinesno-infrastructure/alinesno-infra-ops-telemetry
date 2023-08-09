@@ -12,7 +12,7 @@ import java.util.List;
  * @author luoxiaodong
  * @version 1.0.0
  */
-@TableName("data_points")
+@TableName("metrics_data_point")
 public class MetricsDataPoint extends InfraBaseEntity {
 
     @TableField("sum_id")
@@ -84,4 +84,115 @@ public class MetricsDataPoint extends InfraBaseEntity {
     @TableField("attributes")
     private String attributes;
 
+    public String getSumId() {
+        return sumId;
+    }
+
+    public void setSumId(String sumId) {
+        this.sumId = sumId;
+    }
+
+    public String getGaugeId() {
+        return gaugeId;
+    }
+
+    public void setGaugeId(String gaugeId) {
+        this.gaugeId = gaugeId;
+    }
+
+    public String getHistogramId() {
+        return histogramId;
+    }
+
+    public void setHistogramId(String histogramId) {
+        this.histogramId = histogramId;
+    }
+
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public String getScopeId() {
+        return scopeId;
+    }
+
+    public void setScopeId(String scopeId) {
+        this.scopeId = scopeId;
+    }
+
+    public long getStartTimeUnixNano() {
+        return startTimeUnixNano;
+    }
+
+    public void setStartTimeUnixNano(long startTimeUnixNano) {
+        this.startTimeUnixNano = startTimeUnixNano;
+    }
+
+    public long getTimeUnixNano() {
+        return timeUnixNano;
+    }
+
+    public void setTimeUnixNano(long timeUnixNano) {
+        this.timeUnixNano = timeUnixNano;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
+
+    public List<Integer> getBucketCounts() {
+        return bucketCounts;
+    }
+
+    public void setBucketCounts(List<Integer> bucketCounts) {
+        this.bucketCounts = bucketCounts;
+    }
+
+    public List<Integer> getExplicitBounds() {
+        return explicitBounds;
+    }
+
+    public void setExplicitBounds(List<Integer> explicitBounds) {
+        this.explicitBounds = explicitBounds;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(String attributes) {
+        this.attributes = attributes;
+    }
 }

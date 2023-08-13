@@ -38,7 +38,7 @@ public class TracesHandler extends TraceServiceGrpc.TraceServiceImplBase {
     @Override
     public void export(ExportTraceServiceRequest request, StreamObserver<ExportTraceServiceResponse> responseObserver) {
 
-        logger.debug("metrics ===>>> {}" , new Gson().toJson(request.getResourceSpansList()));
+        logger.debug("trace ===>>> {}" , new Gson().toJson(request.getResourceSpansList()));
 
         for (ResourceSpans resourceSpans : request.getResourceSpansList()) {
             logger.debug("Resource: " + resourceSpans.getResource().getAttributesList().stream().map(kv -> kv.getKey() + ":" + kv.getValue().getStringValue()).collect(Collectors.joining(",")));

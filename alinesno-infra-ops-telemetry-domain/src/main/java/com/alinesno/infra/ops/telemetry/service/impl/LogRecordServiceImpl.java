@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 日志记录Service业务层处理
  *
@@ -19,4 +21,9 @@ import org.springframework.stereotype.Service;
 public class LogRecordServiceImpl extends IBaseServiceImpl<LogRecord, LogRecordMapper> implements ILogRecordService {
     // 日志记录
     private static final Logger log = LoggerFactory.getLogger(LogRecordServiceImpl.class);
+
+    @Override
+    public void saveLog(List<String> logList) {
+        // TODO 日志当前agent未实现，貌似还没有支持接收
+    }
 }

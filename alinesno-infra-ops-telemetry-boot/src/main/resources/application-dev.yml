@@ -7,25 +7,18 @@ spring:
     name: alinesno-infra-ops-telemetry-boot
   datasource:
     driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
-    url: jdbc:clickhouse://172.81.205.216:8123/default
+    url: jdbc:clickhouse://127.0.0.1:8123/default
     username: default
     password:
   data:
     redis:
      host: 127.0.0.1
      port: 6379
-     password: admin
+     password: aip@local
      timeout: 10s
   kafka:
     bootstrap-servers:
       - 192.168.101.18:9092
-    consumer:
-      group-id: 1
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      auto-offset-reset: earliest
-      enable-auto-commit: true
-      max-poll-records: 500
   devtools:
     restart:
       enabled: true

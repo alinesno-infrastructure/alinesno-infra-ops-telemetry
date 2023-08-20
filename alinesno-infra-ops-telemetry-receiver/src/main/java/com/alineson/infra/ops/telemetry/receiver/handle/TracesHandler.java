@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alineson.infra.ops.telemetry.receiver.constants.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
 import com.alineson.infra.ops.telemetry.receiver.utils.HelperUtils;
-import com.google.gson.Gson;
 import io.grpc.stub.StreamObserver;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceRequest;
 import io.opentelemetry.proto.collector.trace.v1.ExportTraceServiceResponse;
@@ -51,7 +50,7 @@ public class TracesHandler extends TraceServiceGrpc.TraceServiceImplBase {
         responseObserver.onNext(ExportTraceServiceResponse.newBuilder().build());
         responseObserver.onCompleted();
 
-        log.debug("TracesHandler list >>>>>>>>>>>>> \r\n {} " , new Gson().toJson(list));
+        log.debug("TracesHandler list >>>>>>>>>>>>> \r\n {} " , JSONObject.toJSON(list));
 
         // Send To Kafka
         TelemetryKafkaProducer.getInstance().sendMessage(Constants.MQ_TRACE_TOPIC, JSONObject.toJSON(list));

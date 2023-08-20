@@ -51,4 +51,15 @@ public class KindConstants {
      * 表示状态码为错误。
      */
     public static final String StatusCodeError = "ERROR";
+
+    public static final String AGGREGATION_TEMPORALITY_UNSPECIFIED = "AGGREGATION_TEMPORALITY_UNSPECIFIED";
+    public static final String AGGREGATION_TEMPORALITY_DELTA = "AGGREGATION_TEMPORALITY_DELTA";
+    public static final String AGGREGATION_TEMPORALITY_CUMULATIVE = "AGGREGATION_TEMPORALITY_CUMULATIVE";
+    public static final String METRIC_DATA_TYPE_NONE = "METRIC_DATA_TYPE_NONE";
+    public static final String METRIC_DATA_TYPE_GAUGE = "METRIC_DATA_TYPE_GAUGE";
+    public static final String METRIC_DATA_TYPE_SUM = "METRIC_DATA_TYPE_SUM";
+    public static final String METRIC_DATA_TYPE_HISTOGRAM = "METRIC_DATA_TYPE_HISTOGRAM";
+    public static final String METRIC_DATA_TYPE_EXPONENTIAL_HISTOGRAM = "METRIC_DATA_TYPE_EXPONENTIAL_HISTOGRAM";
+    public static final String METRIC_DATA_TYPE_SUMMARY = "METRIC_DATA_TYPE_SUMMARY";
+
 }

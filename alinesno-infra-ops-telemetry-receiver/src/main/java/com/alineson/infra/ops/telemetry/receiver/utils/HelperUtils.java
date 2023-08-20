@@ -5,6 +5,8 @@ import com.alineson.infra.ops.telemetry.receiver.constants.KindConstants;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import io.opentelemetry.proto.common.v1.KeyValue;
+import io.opentelemetry.proto.metrics.v1.Exemplar;
+import io.opentelemetry.proto.metrics.v1.SummaryDataPoint;
 import io.opentelemetry.proto.trace.v1.Span;
 import io.opentelemetry.proto.trace.v1.Status;
 
@@ -213,5 +215,114 @@ public class HelperUtils {
             case KindConstants.StatusCodeError -> "STATUS_CODE_ERROR";
             default -> "";
         };
+    }
+
+    public static List<Double> convertQuantiles(List<SummaryDataPoint.ValueAtQuantile> quantileValuesList) {
+
+        List<Double> quantiles = new ArrayList<>();
+
+        for(SummaryDataPoint.ValueAtQuantile p : quantileValuesList){
+            quantiles.add(p.getQuantile()) ;
+        }
+
+        return quantiles ;
+    }
+
+    public static List<Double> convertValue(List<SummaryDataPoint.ValueAtQuantile> quantileValuesList) {
+        List<Double> values = new ArrayList<>();
+
+        for(SummaryDataPoint.ValueAtQuantile p : quantileValuesList){
+            values.add(p.getValue()) ;
+        }
+
+        return values;
+    }
+
+    public static double getValue(long intValue, double floatValue, Object dataType) {
+
+        return intValue ;
+
+//        if (dataType instanceof pmetric.ExemplarValueType) {
+//            pmetric.ExemplarValueType exemplarValueType = (pmetric.ExemplarValueType) dataType;
+//            switch (exemplarValueType) {
+//                case ExemplarValueTypeDouble:
+//                    return floatValue;
+//                case ExemplarValueTypeInt:
+//                    return (double) intValue;
+//                case ExemplarValueTypeEmpty:
+//                    logger.warn("Exemplar value type is unset, use 0.0 as default");
+//                    return 0.0;
+//                default:
+//                    logger.warn("Can't find a suitable value for ExemplarValueType, use 0.0 as default");
+//                    return 0.0;
+//            }
+//        } else if (dataType instanceof pmetric.NumberDataPointValueType) {
+//            pmetric.NumberDataPointValueType numberDataPointValueType = (pmetric.NumberDataPointValueType) dataType;
+//            switch (numberDataPointValueType) {
+//                case NumberDataPointValueTypeDouble:
+//                    return floatValue;
+//                case NumberDataPointValueTypeInt:
+//                    return (double) intValue;
+//                case NumberDataPointValueTypeEmpty:
+//                    logger.warn("DataPoint value type is unset, use 0.0 as default");
+//                    return 0.0;
+//                default:
+//                    logger.warn("Can't find a suitable value for NumberDataPointValueType, use 0.0 as default");
+//                    return 0.0;
+//            }
+//        } else {
+//            logger.warn("unsupported ValueType, current support: ExemplarValueType, NumberDataPointValueType, use 0.0 as default");
+//            return 0.0;
+//        }
+    }
+
+    public static Map<String, JSONObject> convertExemplarAttribute(List<Exemplar> exemplarsList) {
+        Map<String, JSONObject> map = new HashMap<>() ;
+
+        for(Exemplar e : exemplarsList){
+            map.putAll(HelperUtils.attributesToMap(e.getFilteredAttributesList())); ;
+        }
+
+        return map;
+    }
+
+    public static List<Long> convertExemplarTimeUnit(List<Exemplar> exemplarsList) {
+        List<Long> times = new ArrayList<>() ;
+
+        for(Exemplar e : exemplarsList){
+            times.add(e.getTimeUnixNano()) ;
+        }
+
+        return times ;
+    }
+
+    public static List<Double> convertExemplarValue(List<Exemplar> exemplarsList) {
+        List<Double> times = new ArrayList<>() ;
+
+        for(Exemplar e : exemplarsList){
+            times.add(getValue(e.getAsInt() , e.getAsDouble() , e.getParserForType())) ;
+        }
+
+        return times ;
+    }
+
+    public static List<String> convertExemplarSpanId(List<Exemplar> exemplarsList) {
+        List<String> times = new ArrayList<>() ;
+
+        for(Exemplar e : exemplarsList){
+            times.add(HelperUtils.toHexOrEmptyString(e.getSpanId())) ;
+        }
+
+        return times ;
+    }
+
+    public static List<String> convertExemplarTraceId(List<Exemplar> exemplarsList) {
+        List<String> times = new ArrayList<>() ;
+
+        for(Exemplar e : exemplarsList){
+            times.add(HelperUtils.toHexOrEmptyString(e.getTraceId())) ;
+        }
+
+        return times ;
     }
 }

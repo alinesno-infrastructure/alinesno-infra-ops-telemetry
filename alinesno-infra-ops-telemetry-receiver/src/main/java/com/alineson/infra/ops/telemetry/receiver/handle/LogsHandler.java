@@ -12,7 +12,6 @@ import io.opentelemetry.proto.logs.v1.ResourceLogs;
 import io.opentelemetry.proto.logs.v1.ScopeLogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 描述：该类为处理日志的 gRPC 服务实现类。
@@ -34,7 +33,7 @@ public class LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
     public void export(ExportLogsServiceRequest request, StreamObserver<ExportLogsServiceResponse> responseObserver) {
         logger.debug("export");
 
-        logger.debug("metrics ===>>> {}" , new Gson().toJson(request.getResourceLogsList()));
+        logger.debug("LogsHandler ===>>> {}" , new Gson().toJson(request.getResourceLogsList()));
 
         for (ResourceLogs resourceLogs : request.getResourceLogsList()) {
             for (ScopeLogs scopeLogs : resourceLogs.getScopeLogsList()) {

@@ -66,11 +66,11 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
                     log.debug("data case = {}" , dataCase.getNumber());
 
                     switch (dataCase.getNumber()) {
-                        case 5 -> buildGaugeMessage(list, metrics , scopeMetrics , resAttr);
-                        case 7 -> buildSumMessage(list, metrics , scopeMetrics , resAttr);
-                        case 9 -> buildHistogramMessage(list, metrics , scopeMetrics , resAttr);
-                        case 10 -> buildExponentialHistogramMessage(list, metrics , scopeMetrics , resAttr);
-                        case 11 -> buildSummaryMessage(list, metrics , scopeMetrics , resAttr);
+                        case Metric.GAUGE_FIELD_NUMBER -> buildGaugeMessage(list, metrics , scopeMetrics , resAttr);
+                        case Metric.SUM_FIELD_NUMBER -> buildSumMessage(list, metrics , scopeMetrics , resAttr);
+                        case Metric.HISTOGRAM_FIELD_NUMBER -> buildHistogramMessage(list, metrics , scopeMetrics , resAttr);
+                        case Metric.EXPONENTIAL_HISTOGRAM_FIELD_NUMBER -> buildExponentialHistogramMessage(list, metrics , scopeMetrics , resAttr);
+                        case Metric.SUMMARY_FIELD_NUMBER -> buildSummaryMessage(list, metrics , scopeMetrics , resAttr);
                         case 0 -> {
                         }
                     }

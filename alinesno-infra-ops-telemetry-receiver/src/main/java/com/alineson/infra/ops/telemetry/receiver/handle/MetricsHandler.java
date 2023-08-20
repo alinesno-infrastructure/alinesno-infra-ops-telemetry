@@ -38,7 +38,7 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
     @Override
     public void export(ExportMetricsServiceRequest request, StreamObserver<ExportMetricsServiceResponse> responseObserver) {
 
-        List<Map<String , Object>> list = handlePush(request.getResourceMetricsList()) ;
+        List<List<Map<String, Object>>> list = handlePush(request.getResourceMetricsList()) ;
 
         responseObserver.onNext(ExportMetricsServiceResponse.newBuilder().build());
         responseObserver.onCompleted();
@@ -49,9 +49,15 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
         TelemetryKafkaProducer.getInstance().sendMessage(Constants.MQ_METRICS_TOPIC, JSONObject.toJSON(list));
     }
 
-    private List<Map<String, Object>> handlePush(List<ResourceMetrics> resourceMetricsList) {
+    private List<List<Map<String, Object>>> handlePush(List<ResourceMetrics> resourceMetricsList) {
         // 创建一个空的 JSON 对象列表
-        List<Map<String , Object>> list = new ArrayList<>();
+        List<Map<String , Object>> gaugeList = new ArrayList<>();
+        List<Map<String , Object>> sumList = new ArrayList<>();
+        List<Map<String , Object>> histogramList = new ArrayList<>();
+        List<Map<String , Object>> exponentialHistogramList = new ArrayList<>();
+        List<Map<String , Object>> summaryList = new ArrayList<>();
+
+        List<List<Map<String , Object>>> listMap = new ArrayList<>() ;
 
         for (ResourceMetrics resourceMetrics : resourceMetricsList) {
 
@@ -66,11 +72,11 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
                     log.debug("data case = {}" , dataCase.getNumber());
 
                     switch (dataCase.getNumber()) {
-                        case Metric.GAUGE_FIELD_NUMBER -> buildGaugeMessage(list, metrics , scopeMetrics , resAttr);
-                        case Metric.SUM_FIELD_NUMBER -> buildSumMessage(list, metrics , scopeMetrics , resAttr);
-                        case Metric.HISTOGRAM_FIELD_NUMBER -> buildHistogramMessage(list, metrics , scopeMetrics , resAttr);
-                        case Metric.EXPONENTIAL_HISTOGRAM_FIELD_NUMBER -> buildExponentialHistogramMessage(list, metrics , scopeMetrics , resAttr);
-                        case Metric.SUMMARY_FIELD_NUMBER -> buildSummaryMessage(list, metrics , scopeMetrics , resAttr);
+                        case Metric.GAUGE_FIELD_NUMBER -> buildGaugeMessage(gaugeList, metrics , scopeMetrics , resAttr);
+                        case Metric.SUM_FIELD_NUMBER -> buildSumMessage(sumList, metrics , scopeMetrics , resAttr);
+                        case Metric.HISTOGRAM_FIELD_NUMBER -> buildHistogramMessage(histogramList, metrics , scopeMetrics , resAttr);
+                        case Metric.EXPONENTIAL_HISTOGRAM_FIELD_NUMBER -> buildExponentialHistogramMessage(exponentialHistogramList, metrics , scopeMetrics , resAttr);
+                        case Metric.SUMMARY_FIELD_NUMBER -> buildSummaryMessage(summaryList, metrics , scopeMetrics , resAttr);
                         case 0 -> {
                         }
                     }
@@ -79,7 +85,13 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
             }
         }
 
-        return list ;
+        listMap.add(gaugeList) ;
+        listMap.add(sumList) ;
+        listMap.add(histogramList) ;
+        listMap.add(exponentialHistogramList) ;
+        listMap.add(summaryList) ;
+
+        return listMap ;
     }
 
     private void buildSummaryMessage(List<Map<String, Object>> list, Metric metrics, ScopeMetrics scopeMetrics, Map<String, JSONObject> resAttr) {

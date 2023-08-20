@@ -325,4 +325,13 @@ public class HelperUtils {
 
         return times ;
     }
+
+    public static String getServiceName(JSONObject serviceName) {
+
+        if(serviceName != null){
+            return serviceName.getString("value_")  ;
+        }
+
+        return "" ;
+    }
 }

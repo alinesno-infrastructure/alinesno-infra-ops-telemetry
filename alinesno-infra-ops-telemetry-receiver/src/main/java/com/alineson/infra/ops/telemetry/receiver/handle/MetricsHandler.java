@@ -1,5 +1,6 @@
 package com.alineson.infra.ops.telemetry.receiver.handle;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alineson.infra.ops.telemetry.receiver.constants.Constants;
 import com.alineson.infra.ops.telemetry.receiver.kafka.TelemetryKafkaProducer;
 import com.google.gson.Gson;
@@ -37,11 +38,15 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
         logger.debug("metrics ===>>> {}" , new Gson().toJson(request.getResourceMetricsList()));
 
         for (ResourceMetrics resourceMetrics : request.getResourceMetricsList()) {
+
             logger.debug("Resource: " + resourceMetrics.getResource().getAttributesList().stream().map(kv -> kv.getKey() + ":" + kv.getValue().getStringValue()).collect(Collectors.joining(",")));
             for (ScopeMetrics scopeMetrics : resourceMetrics.getScopeMetricsList()) {
                 logger.debug("Scope: " + scopeMetrics.getScope().getName() + ":" + scopeMetrics.getScope().getVersion());
                 for (Metric metric : scopeMetrics.getMetricsList()) {
                     logger.info("Metric: " + metric.getName() + ", unit=" + metric.getUnit());
+
+                    logger.debug("metrics ===>>>>>>>>>>>>> \r\n{}" , JSONObject.toJSONString(metric));
+
                 }
             }
         }

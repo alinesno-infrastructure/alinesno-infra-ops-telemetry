@@ -6,19 +6,18 @@ spring:
   application:
     name: alinesno-infra-ops-telemetry-boot
   datasource:
-    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
-    url: jdbc:clickhouse://127.0.0.1:8123/default
+    driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
+    url: jdbc:clickhouse://127.0.0.1/default
     username: default
     password:
   data:
     redis:
-     host: 127.0.0.1
+     host: localhost
      port: 6379
-     password: aip@local
      timeout: 10s
   kafka:
     bootstrap-servers:
-      - 192.168.101.18:9092
+      - localhost:9092
   devtools:
     restart:
       enabled: true

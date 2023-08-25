@@ -1,9 +1,9 @@
 package com.alinesno.infra.ops.telemetry.adapter.collect;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alinesno.infra.ops.telemetry.adapter.utils.ThreadPoolUtil;
-import com.alinesno.infra.ops.telemetry.service.ILogRecordService;
-import com.alinesno.infra.ops.telemetry.service.IMetricsResourceService;
-import com.alinesno.infra.ops.telemetry.service.ITraceResourceService;
+import com.alinesno.infra.ops.telemetry.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +35,23 @@ public class BaseLogCollect {
 
 	// 日志服务
 	@Autowired
-	private ILogRecordService logRecordService ;
+	private ITelemetryLogsService iTelemetryLogsService ;
 
 	// 链路跟踪服务
 	@Autowired
-	private ITraceResourceService  traceResourceService ;
+	private ITelemetryTraceService telemetryTraceService ;
 
 	// 监控服务
 	@Autowired
-	private IMetricsResourceService  metricsResourceService ;
+	private ITelemetryMetricsGaugeService telemetryMetricsGaugeService;
+	@Autowired
+	private ITelemetryMetricsSumService telemetryMetricsSumService;
+	@Autowired
+	private ITelemetryMetricsHistogramService telemetryMetricsHistogramService;
+	@Autowired
+	private ITelemetryMetricsExponentialHistogramService telemetryMetricsExponentialHistogramService;
+	@Autowired
+	private ITelemetryMetricsSummaryService telemetryMetricsSummaryService ;
 
 	/**
 	 * 处理跟踪日志。
@@ -53,7 +61,7 @@ public class BaseLogCollect {
 	protected void handleTrace(List<String> logList) {
 		long startTime = System.currentTimeMillis();
 
-		traceResourceService.saveTrace(logList) ;
+		telemetryTraceService.saveTrace(logList) ;
 
 		long endTime = System.currentTimeMillis();
 		long elapsedTime = endTime - startTime;
@@ -68,7 +76,16 @@ public class BaseLogCollect {
 	protected void handleMetrics(List<String> logList) {
 		long startTime = System.currentTimeMillis();
 
-		metricsResourceService.saveMetrics(logList) ;
+		for(String log: logList) {
+			JSONArray jsonArray = JSON.parseArray(log);
+
+			telemetryMetricsGaugeService.saveGauge(jsonArray.getString(0));
+			telemetryMetricsSumService.saveSum(jsonArray.getString(1));
+			telemetryMetricsHistogramService.saveHistogram(jsonArray.getString(2));
+			telemetryMetricsExponentialHistogramService.saveHistogram(jsonArray.getString(3));
+			telemetryMetricsSummaryService.saveSummary(jsonArray.getString(4));
+		}
+
 
 		long endTime = System.currentTimeMillis();
 		long elapsedTime = endTime - startTime;
@@ -83,7 +100,7 @@ public class BaseLogCollect {
 	protected void handleLog(List<String> logList) {
 		long startTime = System.currentTimeMillis();
 
-		logRecordService.saveLog(logList) ;
+		iTelemetryLogsService.saveLogs(logList) ;
 
 		long endTime = System.currentTimeMillis();
 		long elapsedTime = endTime - startTime;

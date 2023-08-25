@@ -38,7 +38,7 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
     @Override
     public void export(ExportMetricsServiceRequest request, StreamObserver<ExportMetricsServiceResponse> responseObserver) {
 
-        List<List<Map<String, Object>>> list = handlePush(request.getResourceMetricsList()) ;
+        List<List<Map<String, Object>>> list = handlePush(request.getResourceMetricsList());
 
         responseObserver.onNext(ExportMetricsServiceResponse.newBuilder().build());
         responseObserver.onCompleted();
@@ -165,7 +165,7 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
             String scopeSchemaUrl = scopeMetrics.getSchemaUrl() ;
             String metricName = metrics.getName() ;
             String metricDescription = metrics.getDescription() ;
-            String metricUnit = metrics.getUnit(); ;
+            String metricUnit = metrics.getUnit();
 
             Map<String, JSONObject> exemplarsFilteredAttributes = HelperUtils.convertExemplarAttribute(dp.getExemplarsList()) ;
             List<Long> exemplarsTimeUnix  = HelperUtils.convertExemplarTimeUnit(dp.getExemplarsList())  ;
@@ -310,10 +310,10 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
             String metricUnit = metrics.getUnit(); ;
 
             Map<String, JSONObject> attributes = HelperUtils.attributesToMap(dp.getAttributesList()) ;
-            double startTimeUnix = dp.getStartTimeUnixNano() ;
-            double timeUnix = dp.getTimeUnixNano() ;
+            long startTimeUnix = dp.getStartTimeUnixNano() ;
+            long timeUnix = dp.getTimeUnixNano() ;
             double value = HelperUtils.getValue(dp.getAsInt() , dp.getAsDouble() , dp.getParserForType()) ;
-            double flags = dp.getFlags() ;
+            long flags = dp.getFlags() ;
 
             Map<String, JSONObject> exemplarsFilteredAttributes = HelperUtils.convertExemplarAttribute(dp.getExemplarsList()) ;
             List<Long> exemplarsTimeUnix  = HelperUtils.convertExemplarTimeUnit(dp.getExemplarsList())  ;
@@ -372,8 +372,8 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
             String metricUnit = metrics.getUnit(); ;
 
             Map<String, JSONObject> attributes = HelperUtils.attributesToMap(dp.getAttributesList()) ;
-            double startTimeUnix = dp.getStartTimeUnixNano() ;
-            double timeUnix = dp.getTimeUnixNano() ;
+            long startTimeUnix = dp.getStartTimeUnixNano() ;
+            long timeUnix = dp.getTimeUnixNano() ;
             double value = HelperUtils.getValue(dp.getAsInt() , dp.getAsDouble() , dp.getParserForType()) ;
             double flags = dp.getFlags() ;
 

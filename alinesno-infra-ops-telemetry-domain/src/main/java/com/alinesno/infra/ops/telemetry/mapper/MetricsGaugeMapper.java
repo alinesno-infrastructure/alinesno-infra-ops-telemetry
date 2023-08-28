@@ -5,10 +5,9 @@ import com.alinesno.infra.ops.telemetry.entity.MetricsGauge;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 测量信息 Mapper接口
+ * 表示 MetricsGauge 的 Mapper 接口
  *
  * @version 1.0.0
- * @since 1.0.0
  * @author luoxiaodong
  */
 @Mapper

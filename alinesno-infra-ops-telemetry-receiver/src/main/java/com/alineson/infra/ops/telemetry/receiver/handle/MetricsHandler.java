@@ -38,7 +38,7 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
     @Override
     public void export(ExportMetricsServiceRequest request, StreamObserver<ExportMetricsServiceResponse> responseObserver) {
 
-        List<List<Map<String, Object>>> list = handlePush(request.getResourceMetricsList());
+        Map<String, List<Map<String, Object>>> list = handlePush(request.getResourceMetricsList());
 
         responseObserver.onNext(ExportMetricsServiceResponse.newBuilder().build());
         responseObserver.onCompleted();
@@ -49,7 +49,7 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
         TelemetryKafkaProducer.getInstance().sendMessage(Constants.MQ_METRICS_TOPIC, JSONObject.toJSON(list));
     }
 
-    private List<List<Map<String, Object>>> handlePush(List<ResourceMetrics> resourceMetricsList) {
+    private Map<String, List<Map<String, Object>>> handlePush(List<ResourceMetrics> resourceMetricsList) {
         // 创建一个空的 JSON 对象列表
         List<Map<String , Object>> gaugeList = new ArrayList<>();
         List<Map<String , Object>> sumList = new ArrayList<>();
@@ -57,7 +57,7 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
         List<Map<String , Object>> exponentialHistogramList = new ArrayList<>();
         List<Map<String , Object>> summaryList = new ArrayList<>();
 
-        List<List<Map<String , Object>>> listMap = new ArrayList<>() ;
+        Map<String, List<Map<String , Object>>> listMap = new HashMap<>() ;
 
         for (ResourceMetrics resourceMetrics : resourceMetricsList) {
 
@@ -85,11 +85,11 @@ public class MetricsHandler extends MetricsServiceGrpc.MetricsServiceImplBase {
             }
         }
 
-        listMap.add(gaugeList) ;
-        listMap.add(sumList) ;
-        listMap.add(histogramList) ;
-        listMap.add(exponentialHistogramList) ;
-        listMap.add(summaryList) ;
+        listMap.put("metricsGauge", gaugeList) ;
+        listMap.put("metricsSum", sumList) ;
+        listMap.put("metricsHistogram", histogramList) ;
+        listMap.put("metricsExponentialHistogram", exponentialHistogramList) ;
+        listMap.put("metricsSummary", summaryList) ;
 
         return listMap ;
     }

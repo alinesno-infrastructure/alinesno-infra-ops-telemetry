@@ -7,7 +7,7 @@ spring:
     name: alinesno-infra-ops-telemetry-boot
   datasource:
     driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
-    url: jdbc:clickhouse://8.130.82.192:8123/default
+    url: jdbc:clickhouse://127.0.0.1:8123/default
     username: default
   data:
     redis:

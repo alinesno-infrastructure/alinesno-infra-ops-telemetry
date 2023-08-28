@@ -1,0 +1,34 @@
+2023-08-23T10:20:45.070+08:00  INFO 39840 --- [restartedMain] c.a.i.o.t.OpsTelemetryApplication        : Starting OpsTelemetryApplication using Java 17.0.4.1 with PID 39840 (D:\project\maven\maven-repository\org\springframework\boot\spring-boot-starter-parent\3.1.2\target\classes started by 夏和圆周 in D:\project\vscode\alinesno\alinesno-infra-ops-telemetry)
+2023-08-23T10:20:45.075+08:00 DEBUG 39840 --- [restartedMain] c.a.i.o.t.OpsTelemetryApplication        : Running with Spring Boot v3.1.2, Spring v6.0.11
+2023-08-23T10:20:45.078+08:00  INFO 39840 --- [restartedMain] c.a.i.o.t.OpsTelemetryApplication        : The following 5 profiles are active: "base", "security", "mybatis", "sa-token", "dev"
+2023-08-23T10:20:45.224+08:00  INFO 39840 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-08-23T10:20:45.224+08:00  INFO 39840 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-08-23T10:20:47.529+08:00  INFO 39840 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-08-23T10:20:47.534+08:00  INFO 39840 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-08-23T10:20:47.608+08:00  INFO 39840 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 0 Redis repository interfaces.
+2023-08-23T10:20:49.888+08:00  WARN 39840 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2023-08-23T10:20:49.950+08:00  INFO 39840 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2023-08-23T10:20:49.952+08:00  INFO 39840 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4726 ms
+2023-08-23T10:20:50.568+08:00  WARN 39840 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'collectStartBean': Unsatisfied dependency expressed through field 'kafkaLogCollect': Error creating bean with name 'kafkaTraceCollect': Unsatisfied dependency expressed through field 'logRecordService': Error creating bean with name 'logRecordServiceImpl': Unsatisfied dependency expressed through field 'baseMapper': Error creating bean with name 'logRecordMapper' defined in file [D:\project\maven\maven-repository\org\springframework\boot\spring-boot-starter-parent\3.1.2\target\classes\com\alinesno\infra\ops\telemetry\mapper\LogRecordMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory': Error creating bean with name 'sqlSessionFactory' defined in class path resource [com/baomidou/mybatisplus/autoconfigure/MybatisPlusAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2023-08-23T10:20:50.605+08:00  INFO 39840 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-08-23T10:20:50.686+08:00 ERROR 39840 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles base,security,mybatis,sa-token,dev are currently active).
+

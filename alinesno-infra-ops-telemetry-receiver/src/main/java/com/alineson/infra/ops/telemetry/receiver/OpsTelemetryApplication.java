@@ -2,7 +2,7 @@ package com.alineson.infra.ops.telemetry.receiver;
 
 import java.io.IOException;
 
-/*
+/**
  * 描述：该类表示一个OTLP OpenTelemetry服务器，用于接收遥测数据。
  *
  * @author luoxiaodong

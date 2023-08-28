@@ -1,9 +1,10 @@
 package com.alinesno.infra.ops.telemetry.adapter.collect;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alinesno.infra.ops.telemetry.adapter.utils.ThreadPoolUtil;
-import com.alinesno.infra.ops.telemetry.service.ILogRecordService;
-import com.alinesno.infra.ops.telemetry.service.IMetricsResourceService;
-import com.alinesno.infra.ops.telemetry.service.ITraceResourceService;
+import com.alinesno.infra.ops.telemetry.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +36,35 @@ public class BaseLogCollect {
 
 	// 日志服务
 	@Autowired
-	private ILogRecordService logRecordService ;
+	private ILogsService logsService;
+
 
 	// 链路跟踪服务
 	@Autowired
-	private ITraceResourceService  traceResourceService ;
+	private ITraceService traceService;
 
-	// 监控服务
+
+	// 监控服务 metricsGauge
 	@Autowired
-	private IMetricsResourceService  metricsResourceService ;
+	private IMetricsGaugeService metricsGaugeService;
 
+	// 监控服务 sum
+	@Autowired
+	private IMetricsSumService metricsSumService;
+
+	//监控服务 histogram
+	@Autowired
+	private IMetricsHistogramService metricsHistogramService;
+
+	// 监控服务 exponentialHistogram
+	@Autowired
+	private IMetricsExponentialHistogramService metricsExponentialHistogramService;
+
+	// 监控服务 summary
+	@Autowired
+	private IMetricsSummaryService metricsSummaryService;
+
+	
 	/**
 	 * 处理跟踪日志。
 	 *
@@ -53,11 +73,11 @@ public class BaseLogCollect {
 	protected void handleTrace(List<String> logList) {
 		long startTime = System.currentTimeMillis();
 
-		traceResourceService.saveTrace(logList) ;
+		traceService.saveTrace(logList) ;
 
 		long endTime = System.currentTimeMillis();
 		long elapsedTime = endTime - startTime;
-		System.out.println("方法执行时间：" + elapsedTime + " 毫秒 , 插入数据:"+ logList.size() +" 条");
+		log.info("方法执行时间：" + elapsedTime + " 毫秒 , 插入数据:"+ logList.size() +" 条");
 	}
 
 	/**
@@ -68,11 +88,19 @@ public class BaseLogCollect {
 	protected void handleMetrics(List<String> logList) {
 		long startTime = System.currentTimeMillis();
 
-		metricsResourceService.saveMetrics(logList) ;
+		for(String log: logList) {
+			JSONObject jsonObject = JSON.parseObject(log);
+
+			metricsGaugeService.saveGauge(jsonObject.getString("metricsGauge"));
+			metricsSumService.saveSum(jsonObject.getString("metricsSum"));
+			metricsHistogramService.saveHistogram(jsonObject.getString("metricsHistogram"));
+			metricsExponentialHistogramService.saveHistogram(jsonObject.getString("metricsExponentialHistogram"));
+			metricsSummaryService.saveSummary(jsonObject.getString("metricsSummary"));
+		}
 
 		long endTime = System.currentTimeMillis();
 		long elapsedTime = endTime - startTime;
-		System.out.println("方法执行时间：" + elapsedTime + " 毫秒 , 插入数据:"+ logList.size() +" 条");
+		log.info("方法执行时间：" + elapsedTime + " 毫秒 , 插入数据:"+ logList.size() +" 条");
 	}
 
 	/**
@@ -83,10 +111,10 @@ public class BaseLogCollect {
 	protected void handleLog(List<String> logList) {
 		long startTime = System.currentTimeMillis();
 
-		logRecordService.saveLog(logList) ;
+		logsService.saveLogs(logList) ;
 
 		long endTime = System.currentTimeMillis();
 		long elapsedTime = endTime - startTime;
-		System.out.println("方法执行时间：" + elapsedTime + " 毫秒 , 插入数据:"+ logList.size() +" 条");
+		log.info("方法执行时间：" + elapsedTime + " 毫秒 , 插入数据:"+ logList.size() +" 条");
 	}
 }

@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 表示 telemetry_metrics_gauge 实体。
+ * 表示 telemetry_metrics_exponential_histogram 实体。
  *
  * @version 1.0.0
  * @author luoxiaodong
  */
-@TableName("telemetry_metrics_gauge")
-public class MetricsGauge extends InfraBaseEntity {
+@TableName("telemetry_metrics_exponential_histogram")
+public class MetricsExponentialHistogram extends InfraBaseEntity {
 
     @TableField("ResourceAttributes")
     private Map<String, String> resourceAttributes; // 资源属性
@@ -55,14 +55,41 @@ public class MetricsGauge extends InfraBaseEntity {
     @TableField("TimeUnix")
     private Long timeUnix; // 时间（Unix 时间戳）
      
-    @TableField("Value")
-    private Double value; // 值
+    @TableField("Count")
+    private Long count; // 计数
+     
+    @TableField("Sum")
+    private Double sum; // 总和
+     
+    @TableField("Scale")
+    private Integer scale; // 缩放
+     
+    @TableField("ZeroCount")
+    private Long zeroCount; // 零计数
+     
+    @TableField("PositiveOffset")
+    private Integer positiveOffset; // 正偏移量
+     
+    @TableField("PositiveBucketCounts")
+    private List<Long> positiveBucketCounts; // 正桶计数
+     
+    @TableField("NegativeOffset")
+    private Integer negativeOffset; // 负偏移量
+     
+    @TableField("NegativeBucketCounts")
+    private List<Long> negativeBucketCounts; // 负桶计数
+     
+    @TableField("Exemplars")
+    private List<Exemplar> exemplars; // 示范点
      
     @TableField("Flags")
     private Long flags; // 标志
      
-    @TableField("Exemplars")
-    private List<Exemplar> exemplars; // 示范点
+    @TableField("Min")
+    private Double min; // 最小值
+     
+    @TableField("Max")
+    private Double max; // 最大值
      
     // 省略 getter 和 setter 方法
 
@@ -233,12 +260,76 @@ public class MetricsGauge extends InfraBaseEntity {
         this.timeUnix = timeUnix;
     }
 
-    public Double getValue() {
-        return value;
+    public Long getCount() {
+        return count;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setCount(Long count) {
+        this.count = count;
+    }
+
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
+    }
+
+    public Integer getScale() {
+        return scale;
+    }
+
+    public void setScale(Integer scale) {
+        this.scale = scale;
+    }
+
+    public Long getZeroCount() {
+        return zeroCount;
+    }
+
+    public void setZeroCount(Long zeroCount) {
+        this.zeroCount = zeroCount;
+    }
+
+    public Integer getPositiveOffset() {
+        return positiveOffset;
+    }
+
+    public void setPositiveOffset(Integer positiveOffset) {
+        this.positiveOffset = positiveOffset;
+    }
+
+    public List<Long> getPositiveBucketCounts() {
+        return positiveBucketCounts;
+    }
+
+    public void setPositiveBucketCounts(List<Long> positiveBucketCounts) {
+        this.positiveBucketCounts = positiveBucketCounts;
+    }
+
+    public Integer getNegativeOffset() {
+        return negativeOffset;
+    }
+
+    public void setNegativeOffset(Integer negativeOffset) {
+        this.negativeOffset = negativeOffset;
+    }
+
+    public List<Long> getNegativeBucketCounts() {
+        return negativeBucketCounts;
+    }
+
+    public void setNegativeBucketCounts(List<Long> negativeBucketCounts) {
+        this.negativeBucketCounts = negativeBucketCounts;
+    }
+
+    public List<Exemplar> getExemplars() {
+        return exemplars;
+    }
+
+    public void setExemplars(List<Exemplar> exemplars) {
+        this.exemplars = exemplars;
     }
 
     public Long getFlags() {
@@ -249,11 +340,19 @@ public class MetricsGauge extends InfraBaseEntity {
         this.flags = flags;
     }
 
-    public List<Exemplar> getExemplars() {
-        return exemplars;
+    public Double getMin() {
+        return min;
     }
 
-    public void setExemplars(List<Exemplar> exemplars) {
-        this.exemplars = exemplars;
+    public void setMin(Double min) {
+        this.min = min;
+    }
+
+    public Double getMax() {
+        return max;
+    }
+
+    public void setMax(Double max) {
+        this.max = max;
     }
 }

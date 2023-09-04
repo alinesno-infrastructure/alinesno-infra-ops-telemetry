@@ -45,9 +45,9 @@ public class KafkaTraceCollect extends BaseLogCollect {
 
 		// 监听的topic
 		this.kafkaConsumer.subscribe(Arrays.asList(
+				Constants.MQ_LOG_TOPIC,
 				Constants.MQ_METRICS_TOPIC,
-				Constants.MQ_METRICS_TOPIC,
-				Constants.MQ_METRICS_TOPIC
+				Constants.MQ_TRACE_TOPIC
 		));
 
 		super.applicationEventPublisher = applicationEventPublisher;
@@ -102,12 +102,12 @@ public class KafkaTraceCollect extends BaseLogCollect {
 
 			// 链路跟踪记录
 			if (!traceList.isEmpty()) {
-				super.handleTrace(logList) ;
+				super.handleTrace(traceList) ;
 			}
 
 			// 监控记录
 			if (!metricsList.isEmpty()) {
-				super.handleMetrics(logList) ;
+				super.handleMetrics(metricsList) ;
 			}
 
 			// 日志记录

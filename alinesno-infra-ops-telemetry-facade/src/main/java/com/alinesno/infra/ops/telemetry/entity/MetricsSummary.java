@@ -7,14 +7,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.List;
 import java.util.Map;
 
+
 /**
- * 表示 telemetry_metrics_sum 实体。
+ * 表示 metrics_summary 实体。
  *
- * @version 1.0.0
  * @author luoxiaodong
+ * @version 1.0.0
  */
-@TableName("telemetry_metrics_sum")
-public class MetricsSum extends InfraBaseEntity {
+@TableName("telemetry_metrics_summary")
+public class MetricsSummary extends InfraBaseEntity {
 
     @TableField("ResourceAttributes")
     private Map<String, String> resourceAttributes;
@@ -32,7 +33,7 @@ public class MetricsSum extends InfraBaseEntity {
     private Map<String, String> scopeAttributes;
 
     @TableField("ScopeDroppedAttrCount")
-    private Integer scopeDroppedAttrCount;
+    private Long scopeDroppedAttrCount;
 
     @TableField("ScopeSchemaUrl")
     private String scopeSchemaUrl;
@@ -50,88 +51,48 @@ public class MetricsSum extends InfraBaseEntity {
     private Map<String, String> attributes;
 
     @TableField("StartTimeUnix")
-    private Long startTimeUnix;
+    private String startTimeUnix;
 
     @TableField("TimeUnix")
-    private Long timeUnix;
+    private String timeUnix;
 
-    @TableField("Value")
-    private Double value;
+    @TableField("Count")
+    private Long count;
+
+    @TableField("Sum")
+    private Double sum;
+
+    @TableField("ValueAtQuantiles")
+    private List<ValueAtQuantiles> valueAtQuantiles;
 
     @TableField("Flags")
-    private Integer flags;
+    private Long flags;
 
-    @TableField(exist = false)
-    private List<Exemplar> exemplars;
-
-    @TableField("AggTemp")
-    private Integer aggTemp;
-
-    @TableField("IsMonotonic")
-    private boolean isMonotonic;
-
-    // 省略 getter 和 setter 方法...
-
-    /**
-     * 表示 Exemplar 实体。
-     */
-    public static class Exemplar {
-
-        @TableField("FilteredAttributes")
-        private Map<String, String> filteredAttributes;
-
-        @TableField("TimeUnix")
-        private Long timeUnix;
-
+    public static class ValueAtQuantiles {
+        @TableField("Quantile")
+        private Double Quantile;
         @TableField("Value")
-        private Double value;
+        private Double Value;
 
-        @TableField("SpanId")
-        private String spanId;
-
-        @TableField("TraceId")
-        private String traceId;
-
-        public Map<String, String> getFilteredAttributes() {
-            return filteredAttributes;
+        public Double getQuantile() {
+            return Quantile;
         }
 
-        public void setFilteredAttributes(Map<String, String> filteredAttributes) {
-            this.filteredAttributes = filteredAttributes;
-        }
-
-        public Long getTimeUnix() {
-            return timeUnix;
-        }
-
-        public void setTimeUnix(Long timeUnix) {
-            this.timeUnix = timeUnix;
+        public void setQuantile(Double quantile) {
+            Quantile = quantile;
         }
 
         public Double getValue() {
-            return value;
+            return Value;
         }
 
         public void setValue(Double value) {
-            this.value = value;
-        }
-
-        public String getSpanId() {
-            return spanId;
-        }
-
-        public void setSpanId(String spanId) {
-            this.spanId = spanId;
-        }
-
-        public String getTraceId() {
-            return traceId;
-        }
-
-        public void setTraceId(String traceId) {
-            this.traceId = traceId;
+            Value = value;
         }
     }
+
+    // 省略 getter 和 setter 方法
+
 
     public Map<String, String> getResourceAttributes() {
         return resourceAttributes;
@@ -173,11 +134,11 @@ public class MetricsSum extends InfraBaseEntity {
         this.scopeAttributes = scopeAttributes;
     }
 
-    public Integer getScopeDroppedAttrCount() {
+    public Long getScopeDroppedAttrCount() {
         return scopeDroppedAttrCount;
     }
 
-    public void setScopeDroppedAttrCount(Integer scopeDroppedAttrCount) {
+    public void setScopeDroppedAttrCount(Long scopeDroppedAttrCount) {
         this.scopeDroppedAttrCount = scopeDroppedAttrCount;
     }
 
@@ -221,59 +182,51 @@ public class MetricsSum extends InfraBaseEntity {
         this.attributes = attributes;
     }
 
-    public Long getStartTimeUnix() {
+    public String getStartTimeUnix() {
         return startTimeUnix;
     }
 
-    public void setStartTimeUnix(Long startTimeUnix) {
+    public void setStartTimeUnix(String startTimeUnix) {
         this.startTimeUnix = startTimeUnix;
     }
 
-    public Long getTimeUnix() {
+    public String getTimeUnix() {
         return timeUnix;
     }
 
-    public void setTimeUnix(Long timeUnix) {
+    public void setTimeUnix(String timeUnix) {
         this.timeUnix = timeUnix;
     }
 
-    public Double getValue() {
-        return value;
+    public Long getCount() {
+        return count;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setCount(Long count) {
+        this.count = count;
     }
 
-    public Integer getFlags() {
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
+    }
+
+    public List<ValueAtQuantiles> getValueAtQuantiles() {
+        return valueAtQuantiles;
+    }
+
+    public void setValueAtQuantiles(List<ValueAtQuantiles> valueAtQuantiles) {
+        this.valueAtQuantiles = valueAtQuantiles;
+    }
+
+    public Long getFlags() {
         return flags;
     }
 
-    public void setFlags(Integer flags) {
+    public void setFlags(Long flags) {
         this.flags = flags;
-    }
-
-    public List<Exemplar> getExemplars() {
-        return exemplars;
-    }
-
-    public void setExemplars(List<Exemplar> exemplars) {
-        this.exemplars = exemplars;
-    }
-
-    public Integer getAggTemp() {
-        return aggTemp;
-    }
-
-    public void setAggTemp(Integer aggTemp) {
-        this.aggTemp = aggTemp;
-    }
-
-    public boolean isMonotonic() {
-        return isMonotonic;
-    }
-
-    public void setMonotonic(boolean monotonic) {
-        isMonotonic = monotonic;
     }
 }

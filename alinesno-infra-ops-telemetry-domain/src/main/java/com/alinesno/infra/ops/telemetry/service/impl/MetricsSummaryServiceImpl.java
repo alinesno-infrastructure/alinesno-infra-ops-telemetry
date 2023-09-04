@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alinesno.infra.common.core.service.impl.IBaseServiceImpl;
-import com.alinesno.infra.ops.telemetry.entity.MetricsHistogram;
-import com.alinesno.infra.ops.telemetry.mapper.MetricsHistogramMapper;
-import com.alinesno.infra.ops.telemetry.service.IMetricsHistogramService;
+import com.alinesno.infra.ops.telemetry.entity.MetricsSummary;
+import com.alinesno.infra.ops.telemetry.mapper.MetricsSummaryMapper;
+import com.alinesno.infra.ops.telemetry.service.IMetricsSummaryService;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,25 +21,25 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.alinesno.infra.ops.telemetry.enums.ClickhouseSqls.metricsHistogramSql;
+import static com.alinesno.infra.ops.telemetry.enums.ClickhouseSqls.metricsSummarySql;
 
 /**
- * 表示 MetricsHistogram 的 Service 业务层处理
+ * 表示 MetricsSummary 的 Service 业务层处理
  *
  * @version 1.0.0
  * @author luoxiaodong
  */
 @Service
-public class MetricsHistogramServiceImpl extends IBaseServiceImpl<MetricsHistogram, MetricsHistogramMapper> implements IMetricsHistogramService {
+public class MetricsSummaryServiceImpl extends IBaseServiceImpl<MetricsSummary, MetricsSummaryMapper> implements IMetricsSummaryService {
     // 日志记录
-    private static final Logger log = LoggerFactory.getLogger(MetricsHistogramServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(MetricsSummaryServiceImpl.class);
 
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Override
-    public void saveHistogram(String logList) {
+    public void saveSummary(String logList) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -47,8 +47,8 @@ public class MetricsHistogramServiceImpl extends IBaseServiceImpl<MetricsHistogr
 
             // 关闭自动提交
             connection.setAutoCommit(false);
-
-            statement = connection.prepareStatement(metricsHistogramSql);
+            
+            statement = connection.prepareStatement(metricsSummarySql);
 
             JSONArray jsonArray = JSON.parseArray(logList);
             for(Object obj: jsonArray) {
@@ -61,9 +61,11 @@ public class MetricsHistogramServiceImpl extends IBaseServiceImpl<MetricsHistogr
                     resAttr.put(key, value);
                 }
                 statement.setObject(1, resAttr);
+
                 statement.setString(2, jsonObject.getString("resourceSchemaUrl"));
                 statement.setString(3, jsonObject.getString("scopeName"));
                 statement.setString(4, jsonObject.getString("scopeVersion"));
+
                 JSONObject scopeAttributes = jsonObject.getJSONObject("scopeAttributes");
                 Map<String, String> scoAttr = new HashMap<>();
                 for (String key : scopeAttributes.keySet()) {
@@ -71,11 +73,13 @@ public class MetricsHistogramServiceImpl extends IBaseServiceImpl<MetricsHistogr
                     scoAttr.put(key, value);
                 }
                 statement.setObject(5, scoAttr);
+
                 statement.setString(6, jsonObject.getString("scopeDroppedAttrCount"));
                 statement.setString(7, jsonObject.getString("scopeSchemaUrl"));
                 statement.setString(8, jsonObject.getString("metricName"));
                 statement.setString(9, jsonObject.getString("metricDescription"));
                 statement.setString(10, jsonObject.getString("metricUnit"));
+
                 JSONObject attributes = jsonObject.getJSONObject("attributes");
                 Map<String, String> attr = new HashMap<>();
                 for (String key : attributes.keySet()) {
@@ -83,23 +87,14 @@ public class MetricsHistogramServiceImpl extends IBaseServiceImpl<MetricsHistogr
                     attr.put(key, value);
                 }
                 statement.setObject(11, attr);
-                statement.setString(12, jsonObject.getString("startTimeUnix"));
-                statement.setString(13, jsonObject.getString("timeUnix"));
-                statement.setString(14, jsonObject.getString("count"));
-                statement.setString(15, jsonObject.getString("sum"));
-                statement.setObject(16, jsonObject.getJSONArray("bucketCounts").toString());
-                statement.setObject(17, jsonObject.getJSONArray("explicitBounds").toString());
 
-                // TODO exemplarsFilteredAttributes 数据为 Map 类型，但是数据库对应字段类型为 Array，调整 exemplarsFilteredAttributes 数据以正确插入数据库中
-//                statement.setString(18, jsonObject.getString("exemplarsFilteredAttributes"));
-
-                statement.setObject(19, jsonObject.getString("exemplarsTimeUnix"));
-                statement.setString(20, jsonObject.getString("exemplarsValue"));
-                statement.setString(21, jsonObject.getString("exemplarsSpanId"));
-                statement.setString(22, jsonObject.getString("exemplarsTraceId"));
-                statement.setString(23, jsonObject.getString("flags"));
-                statement.setString(24, jsonObject.getString("min"));
-                statement.setString(25, jsonObject.getString("max"));
+                statement.setLong(12, jsonObject.getLong("startTimeUnix"));
+                statement.setLong(13, jsonObject.getLong("timeUnix"));
+                statement.setLong(14, jsonObject.getLong("count"));
+                statement.setDouble(15, jsonObject.getDouble("sum"));
+                statement.setString(16, jsonObject.getString("valueAtQuantilesQuantile"));
+                statement.setString(17, jsonObject.getString("valueAtQuantilesValue"));
+                statement.setLong(18, jsonObject.getLong("flags"));
 
                 statement.addBatch();
 

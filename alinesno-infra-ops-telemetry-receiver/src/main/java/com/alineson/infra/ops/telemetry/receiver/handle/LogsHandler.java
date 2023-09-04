@@ -27,7 +27,8 @@ import java.util.Map;
  * @author luoxiaodong
  * @version 1.0.0
  */
-public class LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
+public class
+LogsHandler extends LogsServiceGrpc.LogsServiceImplBase {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     /**

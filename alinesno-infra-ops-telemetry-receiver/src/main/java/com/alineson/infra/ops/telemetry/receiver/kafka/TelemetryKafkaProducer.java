@@ -44,7 +44,7 @@ public class TelemetryKafkaProducer {
             Map<String, Object> kafkaConfig = new HashMap<>();
 
             // Kafka服务器的地址和端口
-            kafkaConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.101.18:9092");
+            kafkaConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.1:9092");
             // 键的序列化器类
             kafkaConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
             // 值的序列化器类

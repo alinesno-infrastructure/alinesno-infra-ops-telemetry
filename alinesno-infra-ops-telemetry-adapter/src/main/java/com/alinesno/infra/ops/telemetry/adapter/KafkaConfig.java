@@ -20,7 +20,7 @@ public class KafkaConfig {
     @Bean
     KafkaConsumer<String , String> kafkaConsumer() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.101.18:9092");
+        props.put("bootstrap.servers", "127.0.1:9092");
         props.put("group.id", "1");
 
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");

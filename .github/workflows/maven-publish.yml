@@ -161,3 +161,51 @@ jobs:
                         -Djib.to.tags=${{ env.PRO_VERSION }}.${{ env.BUILD_NUMBER }} \
                         -Djib.to.auth.username=${{secrets.ALIYUN_CR_USERNAME}} \
                         -Djib.to.auth.password=${{secrets.ALIYUN_CR_PASSWORD}}
+
+      - name: Install MurphySec code scan cli
+        run: |
+          wget -q https://s.murphysec.com/release/install.sh -O - | /bin/bash
+
+      - name: Code scan
+        run: murphysec scan . --token ${{ secrets.MURPHYSEC_TOKEN }}
+
+      - name: local remote scp
+        uses: cross-the-world/scp-pipeline@master
+        with:
+          host: ${{ secrets.SERVER_BATA_HOST_01 }}
+          port: ${{ secrets.SERVER_BATA_PORT_01 }}
+          user: ${{ secrets.SERVER_BATA_USER_01 }}
+          pass: ${{ secrets.SERVER_BATA_KEY_01 }}
+          local: "./deploy/*"
+          remote: /home/github-action/${{ env.PROJECT_NAME }}
+
+      - name: SSH Pipelines
+        uses: cross-the-world/ssh-pipeline@master
+        env:
+          WELCOME: "ssh pipeline"
+        with:
+          host: ${{ secrets.SERVER_BATA_HOST_01 }}
+          port: ${{ secrets.SERVER_BATA_PORT_01 }}
+          user: ${{ secrets.SERVER_BATA_USER_01 }}
+          pass: ${{ secrets.SERVER_BATA_KEY_01 }}
+          connect_timeout: 30s
+          script: |
+            export PROJECT_NAME=${{ env.PROJECT_NAME }}
+            export RECEIVE_PROJECT_NAME=${{ env.RECEIVE_PROJECT_NAME }}
+            export VERSION=${{ env.PRO_VERSION }}.${{ env.BUILD_NUMBER }}
+
+            export ALIYUN_CR_REGISTORY=${{ env.ALIYUN_CR_REGISTORY }}
+            export ALIYUN_CR_NAMESPACE=${{ env.ALIYUN_CR_NAMESPACE }}
+            export NAMESPACE=${{ secrets.K8S_NAMESPACE }}
+
+            export REDIS_HOST=${{ secrets.DEV_REDIS_HOST }}
+            export INFRA_DEV_DOMAIN=${{ secrets.INFRA_DEV_DOMAIN }}
+
+            export KAFKA_SERVERS=${{ secrets.DEV_KAFKA_SERVER }}
+
+            export DB_CLICKHOUSE_URL=${{ secrets.DEV_DB_CLICKHOUSE_URL }}
+            export DB_CLICKHOUSE_USRENAME=${{ secrets.DEV_DB_CLICKHOUSE_USERNAME }}
+            export DB_CLICKHOUSE_PASSWORD=${{ secrets.DEV_DB_CLICKHOUSE_PASSWORD }}
+
+            envsubst < /home/github-action/${{ env.PROJECT_NAME }}/kubernetes-receiver-${{ env.CURRENT_PROFIRE }}.yml | kubectl apply -f -
+            envsubst < /home/github-action/${{ env.PROJECT_NAME }}/kubernetes-telemetry-${{ env.CURRENT_PROFIRE }}.yml | kubectl apply -f -

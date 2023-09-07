@@ -39,12 +39,17 @@ public class TelemetryKafkaProducer {
 
     public static TelemetryKafkaProducer getInstance() {
 
+        String kafkaServers = System.getProperty("kafka.servers");
+        kafkaServers = kafkaServers == null ? "127.0.0.1:9092": kafkaServers ;
+
+        log.debug("kafka server = {}" , kafkaServers);
+
         if(telemetryKafkaProducer == null){
             // Kafka配置
             Map<String, Object> kafkaConfig = new HashMap<>();
 
             // Kafka服务器的地址和端口
-            kafkaConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.1:9092");
+            kafkaConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServers);
             // 键的序列化器类
             kafkaConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
             // 值的序列化器类

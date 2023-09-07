@@ -1,0 +1,68 @@
+# 创建service为${RECEIVE_PROJECT_NAME}
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${RECEIVE_PROJECT_NAME}
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: ${RECEIVE_PROJECT_NAME}
+    release: canary
+  ports:
+    - name: http
+      targetPort: 4316
+      port: 4316
+
+---
+# 创建后端服务的pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${RECEIVE_PROJECT_NAME}
+  namespace: ${NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${RECEIVE_PROJECT_NAME}
+      release: canary
+  template:
+    metadata:
+      labels:
+        app: ${RECEIVE_PROJECT_NAME}
+        release: canary
+    spec:
+      imagePullSecrets:
+        - name: aliyun-docker-registry
+      containers:
+        - name: ${RECEIVE_PROJECT_NAME}
+          image: ${ALIYUN_CR_REGISTORY}/${ALIYUN_CR_NAMESPACE}/${RECEIVE_PROJECT_NAME}:${VERSION}
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: |
+                -Dkafka.servers=${KAFKA_SERVERS}
+          ports:
+            - name: http
+              containerPort: 4316
+
+---
+# 创建域名服务
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-${RECEIVE_PROJECT_NAME}
+  namespace: ${NAMESPACE}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: "${RECEIVE_PROJECT_NAME}.${INFRA_DEV_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ${RECEIVE_PROJECT_NAME}
+                port:
+                  number: 4316

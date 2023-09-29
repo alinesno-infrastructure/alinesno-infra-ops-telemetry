@@ -1,9 +1,9 @@
 package com.alinesno.infra.ops.telemetry.api.controller;
 
 import com.alinesno.infra.common.core.constants.SpringInstanceScope;
-import com.alinesno.infra.common.core.rest.BaseController;
 import com.alinesno.infra.common.facade.pageable.DatatablesPageBean;
 import com.alinesno.infra.common.facade.pageable.TableDataInfo;
+import com.alinesno.infra.common.web.adapter.rest.BaseController;
 import com.alinesno.infra.ops.telemetry.entity.MetricsResource;
 import com.alinesno.infra.ops.telemetry.service.IMetricsResourceService;
 import io.swagger.annotations.Api;
@@ -51,7 +51,7 @@ public class MetricsResourceController extends BaseController<MetricsResource, I
     @PostMapping("/datatables")
     public TableDataInfo datatables(HttpServletRequest request, Model model, DatatablesPageBean page) {
         log.debug("page = {}", ToStringBuilder.reflectionToString(page));
-        return this.toDataInfo(model, this.getFeign(), page);
+        return this.toPage(model, this.getFeign(), page);
     }
 
     @Override

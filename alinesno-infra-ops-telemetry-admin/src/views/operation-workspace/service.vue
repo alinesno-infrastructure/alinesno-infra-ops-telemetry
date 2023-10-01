@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-row class="acp-dashboard-panel" :gutter="20">
-      <el-col class="panel-col" :span="19">
+      <el-col class="panel-col" :span="16">
         <div class="grid-content">
           <div class="panel-header">
-            <div class="header-title"><i class="fa-solid fa-file-waveform"></i> 自动运维套件</div>
+            <div class="header-title"><i class="fa-solid fa-file-waveform"></i> 接入应用列表</div>
           </div>
           <div class="panel-body acp-height-auto" >
             <div class="acp-app-list">
@@ -28,10 +28,10 @@
         </div>
       </el-col>
 
-      <el-col :span="5">
+      <el-col :span="8">
         <div class="grid-content">
           <div class="panel-header">
-            <div class="header-title"><i class="fa-solid fa-user-nurse"></i> 运维资产套件</div>
+            <div class="header-title"><i class="fa-solid fa-user-nurse"></i> 应用运行统计</div>
           </div>
           <div class="panel-body acp-height-auto">
             <ul class="panel-item-text">
@@ -57,17 +57,20 @@
 <script setup>
 
 const opertionAssets = ref([
-  {id:'1' , title:'运维脚本' , count:45} ,
-  {id:'2' , title:'服务资源' , count:145} ,
-  {id:'3' , title:'持续集成' , count:65} ,
-  {id:'4' , title:'自动配置' , count:85} ,
-  {id:'5' , title:'配置管理' , count:45} ,
-  {id:'6' , title:'安全监控' , count:45} ,
+  {id:'1' , title:'平均请求' , count:45} ,
+  {id:'2' , title:'请求Span' , count:145} ,
+  {id:'3' , title:'请求入口' , count:65} ,
+  {id:'4' , title:'日志统计' , count:85} ,
+  {id:'5' , title:'异常统计' , count:45} ,
+  {id:'6' , title:'安全风险' , count:45} ,
 ])
 
 const apps = ref([
   {icon:'https://d1by4p17n947rt.cloudfront.net/icon/d88319dfa5d204f019b4284149886c59-7d586ea82f792b61a8c87de60565133d.svg' , name:'自动化操作服务' , desc:'With Route 53 (3 分钟)'},
   {icon:'https://d1by4p17n947rt.cloudfront.net/icon/9da5a168cf8194c8ee5ed192a443d563-674375b53bc8ae94f48cfdb5c81e8363.svg' , name:'分布式配置中心' , desc:'With Route 53 (3 分钟)'},
+  {icon:'https://d1by4p17n947rt.cloudfront.net/icon/a5ffe5487f62ef75d8e5cf78c18525a5-d4867f9d4adcd749f0c5aff987232847.svg' , name:'审计日志服务' , desc:'With Route 53 (3 分钟)'},
+  {icon:'https://d1by4p17n947rt.cloudfront.net/icon/6e9e16955bd76c1d3a9996e0d6d3ad15-04cfc8c62f597690680d948b366980cf.svg' , name:'持续集成服务' , desc:'With Route 53 (3 分钟)'},
+  {icon:'https://d1by4p17n947rt.cloudfront.net/icon/d88319dfa5d204f019b4284149886c59-7d586ea82f792b61a8c87de60565133d.svg' , name:'容器云管理服务' , desc:'With EC2 (2 分钟)'},
   {icon:'https://d1by4p17n947rt.cloudfront.net/icon/a5ffe5487f62ef75d8e5cf78c18525a5-d4867f9d4adcd749f0c5aff987232847.svg' , name:'审计日志服务' , desc:'With Route 53 (3 分钟)'},
   {icon:'https://d1by4p17n947rt.cloudfront.net/icon/6e9e16955bd76c1d3a9996e0d6d3ad15-04cfc8c62f597690680d948b366980cf.svg' , name:'持续集成服务' , desc:'With Route 53 (3 分钟)'},
   {icon:'https://d1by4p17n947rt.cloudfront.net/icon/d88319dfa5d204f019b4284149886c59-7d586ea82f792b61a8c87de60565133d.svg' , name:'容器云管理服务' , desc:'With EC2 (2 分钟)'},

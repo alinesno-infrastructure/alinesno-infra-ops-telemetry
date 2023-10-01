@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row class="acp-dashboard-panel" :gutter="20">
-      <el-col class="panel-col" :span="19">
+      <el-col class="panel-col" :span="16">
         <div class="grid-content">
           <div class="panel-header">
             <div class="header-title"><i class="fa-solid fa-link"></i> 业务最新巡检</div>
@@ -24,7 +24,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="5">
+      <el-col :span="8">
         <div class="grid-content">
           <div class="panel-header">
             <div class="header-title"><i class="fa-solid fa-link"></i> 构建解决方案</div>

@@ -1,20 +1,21 @@
 <template>
   <div class="siderbar">
     <el-menu default-active="1" class="el-menu-vertical" :collapse="isCollapse" @open="handleOpen" @close="handleClose">
-      <el-menu-item index="1" @click="jumpTo">
+
+      <el-menu-item index="1" @click="jumpTo" title="仪盘表">
         <i class="fa-solid fa-desktop"></i>
       </el-menu-item>
 
-      <el-menu-item index="2" @click="openServiceList">
+      <el-menu-item index="4" @click="openPage('/dashboard/serviceApplication')">
         <i class="fa-solid fa-sailboat"></i>
       </el-menu-item>
 
-      <el-menu-item index="3" @click="openSmartService">
+      <el-menu-item index="2" @click="openPage('/dashboard/serviceMap')">
+        <i class="fa-solid fa-sailboat"></i>
+      </el-menu-item>
+
+      <el-menu-item index="3" @click="openPage('/dashboard/serviceTrace')">
         <i class="fa-solid fa-user-shield"></i>
-      </el-menu-item>
-
-      <el-menu-item index="4" @click="openServiceList">
-        <i class="fa-solid fa-sailboat"></i>
       </el-menu-item>
 
       <el-menu-item index="5" @click="jumpTo">
@@ -85,9 +86,9 @@ function jumpTo() {
   router.push({ path: "/index" });
 }
 
-// 打开智能客服
-function openSmartService() {
-  router.push({ path: "/dashboard/smartService" });
+// 打开界面
+function openPage(path) {
+  router.push({ path: path });
 }
 
 </script>

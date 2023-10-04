@@ -59,19 +59,24 @@ export const constantRoutes = [
         name: '/index',
         meta: { title: '首页', icon: 'dashboard', affix: true }
       },
-
-      // {
-      //   path: '/dashboard/smartService',
-      //   component: () => import('@/views/smartService'),
-      //   name: '/dashboard/smartService',
-      //   meta: { title: '智能客服', icon: 'dashboard', affix: true }
-      // },
-      // {
-      //   path: '/dashboard/serviceList',
-      //   component: () => import('@/views/serviceList'),
-      //   name: '/dashboard/serviceList',
-      //   meta: { title: '服务列表', icon: 'dashboard', affix: true }
-      // },
+      {
+        path: '/dashboard/serviceTrace',
+        component: () => import('@/views/serviceTrace'),
+        name: '/dashboard/serviceTrace',
+        meta: { title: '链路服务', icon: 'dashboard', affix: true }
+      },
+      {
+        path: '/dashboard/serviceApplication',
+        component: () => import('@/views/application'),
+        name: '/dashboard/serviceApplication',
+        meta: { title: '应用列表', icon: 'dashboard', affix: true }
+      },
+      {
+        path: '/dashboard/serviceMap',
+        component: () => import('@/views/serviceMap'),
+        name: '/dashboard/serviceMap',
+        meta: { title: '服务列表', icon: 'dashboard', affix: true }
+      },
       {
         path: '/dashboard/suportTechnique',
         component: () => import('@/views/suportTechnique'),

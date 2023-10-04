@@ -1,0 +1,30 @@
+@import 'theme.scss';
+
+.schedule2-base-node {
+  position: absolute;
+  height: 56px;
+  width: 56px;
+  line-height: 56px;
+  text-align: center;
+  border: 3px solid #ccd6e0 ; 
+  border-radius: 50%;
+
+  .icon-box {
+    .iconfont {
+      font-size: 30px;
+      color: #ccd6e0;
+    }
+  }
+
+  .text-box {
+    position: absolute;
+    display: inline-block;
+    height: 30px;
+    width: 86px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    top: 55px;
+    left: -20px;
+  }
+}

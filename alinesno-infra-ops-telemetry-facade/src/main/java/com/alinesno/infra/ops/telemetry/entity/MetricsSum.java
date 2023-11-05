@@ -1,5 +1,8 @@
 package com.alinesno.infra.ops.telemetry.entity;
 
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnComment;
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnType;
+import lombok.Data;
 import com.alinesno.infra.common.facade.mapper.entity.InfraBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -14,60 +17,97 @@ import java.util.Map;
  * @author luoxiaodong
  */
 @TableName("telemetry_metrics_sum")
+@Data
 public class MetricsSum extends InfraBaseEntity {
 
     @TableField("ResourceAttributes")
+    @ColumnType(length = 255)
+    @ColumnComment("resourceAttributes")
     private Map<String, String> resourceAttributes;
 
     @TableField("ResourceSchemaUrl")
+    @ColumnType(length = 255)
+    @ColumnComment("资源模式URL")
     private String resourceSchemaUrl;
 
     @TableField("ScopeName")
+    @ColumnType(length = 50)
+    @ColumnComment("作用域名称")
     private String scopeName;
 
     @TableField("ScopeVersion")
+    @ColumnType(length = 10)
+    @ColumnComment("作用域版本")
     private String scopeVersion;
 
     @TableField("ScopeAttributes")
+    @ColumnType(length = 255)
+    @ColumnComment("scopeAttributes")
     private Map<String, String> scopeAttributes;
 
     @TableField("ScopeDroppedAttrCount")
+    @ColumnType(length = 10)
+    @ColumnComment("作用域中已删除的属性数量")
     private Integer scopeDroppedAttrCount;
 
     @TableField("ScopeSchemaUrl")
+    @ColumnType(length = 255)
+    @ColumnComment("作用范围模式URL")
     private String scopeSchemaUrl;
 
     @TableField("MetricName")
+    @ColumnType(length = 255)
+    @ColumnComment("指标名称")
     private String metricName;
 
     @TableField("MetricDescription")
+    @ColumnType(length = 255)
+    @ColumnComment("指标描述")
     private String metricDescription;
 
     @TableField("MetricUnit")
+    @ColumnType(length = 20)
+    @ColumnComment("度量单位")
     private String metricUnit;
 
     @TableField("Attributes")
+    @ColumnType(length = 255)
+    @ColumnComment("attributes")
     private Map<String, String> attributes;
 
     @TableField("StartTimeUnix")
+    @ColumnType(length = 10)
+    @ColumnComment("开始时间的Unix时间戳")
     private Long startTimeUnix;
 
     @TableField("TimeUnix")
+    @ColumnType(length = 255)
+    @ColumnComment("时间戳")
     private Long timeUnix;
 
     @TableField("Value")
+    @ColumnType(length = 255)
+    @ColumnComment("value")
     private Double value;
 
     @TableField("Flags")
+    @ColumnType(length = 1)
+    @ColumnComment("标志")
     private Integer flags;
 
     @TableField(exist = false)
+    @ColumnType(length = 255)
+    @ColumnComment("示例")
     private List<Exemplar> exemplars;
 
     @TableField("AggTemp")
+    @ColumnType(length = 255)
+    @ColumnComment("聚合温度")
     private Integer aggTemp;
 
     @TableField("IsMonotonic")
+    @ColumnType(length = 1)
+    @ColumnComment("是否单调")
     private boolean isMonotonic;
 
     // 省略 getter 和 setter 方法...
@@ -78,202 +118,28 @@ public class MetricsSum extends InfraBaseEntity {
     public static class Exemplar {
 
         @TableField("FilteredAttributes")
+        @ColumnType(length = 255)
+        @ColumnComment("filteredAttributes")
         private Map<String, String> filteredAttributes;
 
         @TableField("TimeUnix")
+        @ColumnType(length = 10)
+        @ColumnComment("时间戳")
         private Long timeUnix;
 
         @TableField("Value")
+        @ColumnType(length = 255)
+        @ColumnComment("value")
         private Double value;
 
         @TableField("SpanId")
+        @ColumnType(length = 64)
+        @ColumnComment("跨度标识")
         private String spanId;
 
         @TableField("TraceId")
+        @ColumnType(length = 36)
+        @ColumnComment("追踪ID")
         private String traceId;
-
-        public Map<String, String> getFilteredAttributes() {
-            return filteredAttributes;
-        }
-
-        public void setFilteredAttributes(Map<String, String> filteredAttributes) {
-            this.filteredAttributes = filteredAttributes;
-        }
-
-        public Long getTimeUnix() {
-            return timeUnix;
-        }
-
-        public void setTimeUnix(Long timeUnix) {
-            this.timeUnix = timeUnix;
-        }
-
-        public Double getValue() {
-            return value;
-        }
-
-        public void setValue(Double value) {
-            this.value = value;
-        }
-
-        public String getSpanId() {
-            return spanId;
-        }
-
-        public void setSpanId(String spanId) {
-            this.spanId = spanId;
-        }
-
-        public String getTraceId() {
-            return traceId;
-        }
-
-        public void setTraceId(String traceId) {
-            this.traceId = traceId;
-        }
-    }
-
-    public Map<String, String> getResourceAttributes() {
-        return resourceAttributes;
-    }
-
-    public void setResourceAttributes(Map<String, String> resourceAttributes) {
-        this.resourceAttributes = resourceAttributes;
-    }
-
-    public String getResourceSchemaUrl() {
-        return resourceSchemaUrl;
-    }
-
-    public void setResourceSchemaUrl(String resourceSchemaUrl) {
-        this.resourceSchemaUrl = resourceSchemaUrl;
-    }
-
-    public String getScopeName() {
-        return scopeName;
-    }
-
-    public void setScopeName(String scopeName) {
-        this.scopeName = scopeName;
-    }
-
-    public String getScopeVersion() {
-        return scopeVersion;
-    }
-
-    public void setScopeVersion(String scopeVersion) {
-        this.scopeVersion = scopeVersion;
-    }
-
-    public Map<String, String> getScopeAttributes() {
-        return scopeAttributes;
-    }
-
-    public void setScopeAttributes(Map<String, String> scopeAttributes) {
-        this.scopeAttributes = scopeAttributes;
-    }
-
-    public Integer getScopeDroppedAttrCount() {
-        return scopeDroppedAttrCount;
-    }
-
-    public void setScopeDroppedAttrCount(Integer scopeDroppedAttrCount) {
-        this.scopeDroppedAttrCount = scopeDroppedAttrCount;
-    }
-
-    public String getScopeSchemaUrl() {
-        return scopeSchemaUrl;
-    }
-
-    public void setScopeSchemaUrl(String scopeSchemaUrl) {
-        this.scopeSchemaUrl = scopeSchemaUrl;
-    }
-
-    public String getMetricName() {
-        return metricName;
-    }
-
-    public void setMetricName(String metricName) {
-        this.metricName = metricName;
-    }
-
-    public String getMetricDescription() {
-        return metricDescription;
-    }
-
-    public void setMetricDescription(String metricDescription) {
-        this.metricDescription = metricDescription;
-    }
-
-    public String getMetricUnit() {
-        return metricUnit;
-    }
-
-    public void setMetricUnit(String metricUnit) {
-        this.metricUnit = metricUnit;
-    }
-
-    public Map<String, String> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Map<String, String> attributes) {
-        this.attributes = attributes;
-    }
-
-    public Long getStartTimeUnix() {
-        return startTimeUnix;
-    }
-
-    public void setStartTimeUnix(Long startTimeUnix) {
-        this.startTimeUnix = startTimeUnix;
-    }
-
-    public Long getTimeUnix() {
-        return timeUnix;
-    }
-
-    public void setTimeUnix(Long timeUnix) {
-        this.timeUnix = timeUnix;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    public Integer getFlags() {
-        return flags;
-    }
-
-    public void setFlags(Integer flags) {
-        this.flags = flags;
-    }
-
-    public List<Exemplar> getExemplars() {
-        return exemplars;
-    }
-
-    public void setExemplars(List<Exemplar> exemplars) {
-        this.exemplars = exemplars;
-    }
-
-    public Integer getAggTemp() {
-        return aggTemp;
-    }
-
-    public void setAggTemp(Integer aggTemp) {
-        this.aggTemp = aggTemp;
-    }
-
-    public boolean isMonotonic() {
-        return isMonotonic;
-    }
-
-    public void setMonotonic(boolean monotonic) {
-        isMonotonic = monotonic;
     }
 }

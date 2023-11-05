@@ -1,5 +1,8 @@
 package com.alinesno.infra.ops.telemetry.entity;
 
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnComment;
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnType;
+import lombok.Data;
 import com.alinesno.infra.common.facade.mapper.entity.InfraBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -12,15 +15,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @version 1.0.0
  */
 @TableName("metrics_bean")
+@Data
 public class MetricBean extends InfraBaseEntity {
 
     @TableField("span_id")
+	@ColumnType(length=255)
+	@ColumnComment("资源 ID")
     private String spanId ; // 资源 ID
 
     @TableField("scope_id")
+	@ColumnType(length=255)
+	@ColumnComment("资源 ID")
     private String scopeId ; // 资源 ID
 
     @TableField("resource_id")
+	@ColumnType(length=255)
+	@ColumnComment("资源ID")
     private String resourceId; // 资源 ID
 
     /**
@@ -28,65 +38,25 @@ public class MetricBean extends InfraBaseEntity {
      */
     @JsonProperty("name")
     @TableField("metric_name")
+	@ColumnType(length=255)
+	@ColumnComment("指标名称。")
     private String name;
 
     /**
      * 指标单位。
      */
     @JsonProperty("unit")
+	@ColumnType(length=50)
+	@ColumnComment("指标单位。")
+	@TableField("unit")
     private String unit;
 
     /**
      * 指标描述。
      */
     @JsonProperty("description")
+	@ColumnType(length=255)
+	@ColumnComment("指标描述。")
+	@TableField("description")
     private String description;
-
-    public String getSpanId() {
-        return spanId;
-    }
-
-    public void setSpanId(String spanId) {
-        this.spanId = spanId;
-    }
-
-    public String getScopeId() {
-        return scopeId;
-    }
-
-    public void setScopeId(String scopeId) {
-        this.scopeId = scopeId;
-    }
-
-    public String getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

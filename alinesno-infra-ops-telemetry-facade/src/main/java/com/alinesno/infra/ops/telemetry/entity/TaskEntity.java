@@ -1,5 +1,8 @@
 package com.alinesno.infra.ops.telemetry.entity;
 
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnComment;
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnType;
+import lombok.Data;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.alinesno.infra.common.facade.mapper.entity.InfraBaseEntity;
@@ -10,55 +13,30 @@ import com.alinesno.infra.common.facade.mapper.entity.InfraBaseEntity;
  * @since 1.0.0
  */
 @TableName("send_task") // 指定数据库表名
+@Data
 public class TaskEntity extends InfraBaseEntity {
 
     // 任务名称
     @TableField("task_name")
+	@ColumnType(length=255)
+	@ColumnComment("任务名称")
     private String taskName;
 
     // 定时CRON表达式
     @TableField("cron_expression")
+	@ColumnType(length=255)
+	@ColumnComment("定时CRON表达式")
     private String cronExpression;
 
     // 是否运行
     @TableField("is_running")
+	@ColumnType(length=1)
+	@ColumnComment("是否运行")
     private Boolean running;
 
     // 运行状态
     @TableField("status")
+	@ColumnType(length=255)
+	@ColumnComment("运行状态")
     private String status;
-
-    // 省略了构造函数、getter 和 setter 方法
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public String getCronExpression() {
-        return cronExpression;
-    }
-
-    public void setCronExpression(String cronExpression) {
-        this.cronExpression = cronExpression;
-    }
-
-    public Boolean getRunning() {
-        return running;
-    }
-
-    public void setRunning(Boolean running) {
-        this.running = running;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

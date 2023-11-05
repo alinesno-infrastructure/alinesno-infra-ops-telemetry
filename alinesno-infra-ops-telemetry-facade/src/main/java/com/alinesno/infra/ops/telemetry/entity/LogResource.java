@@ -1,5 +1,8 @@
 package com.alinesno.infra.ops.telemetry.entity;
 
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnComment;
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnType;
+import lombok.Data;
 import com.alinesno.infra.common.facade.mapper.entity.InfraBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,40 +14,20 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @version 1.0.0
  */
 @TableName("log_resources")
+@Data
 public class LogResource extends InfraBaseEntity {
     @TableField("resource_id")
+	@ColumnType(length=50)
+	@ColumnComment("资源ID")
     private String resourceId; // 资源 ID
 
     @TableField("resource_name")
+	@ColumnType(length=255)
+	@ColumnComment("资源名称")
     private String resourceName; // 资源名称
 
     @TableField("attribute")
+	@ColumnType(length=255)
+	@ColumnComment("属性")
     private String attribute ;
-
-    // 省略 getter 和 setter 方法
-
-    public String getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
-    }
-
-
-    public String getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
-    }
 }

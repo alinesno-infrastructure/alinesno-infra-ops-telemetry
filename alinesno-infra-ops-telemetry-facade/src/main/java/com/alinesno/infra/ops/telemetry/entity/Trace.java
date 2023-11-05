@@ -1,5 +1,8 @@
 package com.alinesno.infra.ops.telemetry.entity;
 
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnComment;
+import com.gitee.sunchenbin.mybatis.actable.annotation.ColumnType;
+import lombok.Data;
 import com.alinesno.infra.common.facade.mapper.entity.InfraBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -14,274 +17,129 @@ import java.util.Map;
  * @version 1.0.0
  */
 @TableName("telemetry_trace")
+@Data
 public class Trace extends InfraBaseEntity {
 
     @TableField("Timestamp")
+    @ColumnType(length = 20)
+    @ColumnComment("时间戳")
     private String timestamp; // 时间戳
-     
+
     @TableField("TraceId")
+    @ColumnType(length = 128)
+    @ColumnComment("追踪ID")
     private String traceId; // 追踪 ID
-     
+
     @TableField("SpanId")
+    @ColumnType(length = 64)
+    @ColumnComment("跨度标识")
     private String spanId; // 跨度 ID
-     
+
     @TableField("ParentSpanId")
+    @ColumnType(length = 64)
+    @ColumnComment("父级跨度ID")
     private String parentSpanId; // 父跨度 ID
-     
+
     @TableField("TraceState")
+    @ColumnType(length = 2)
+    @ColumnComment("追踪状态")
     private String traceState; // 追踪状态
-     
+
     @TableField("SpanName")
+    @ColumnType(length = 255)
+    @ColumnComment("跨度名称")
     private String spanName; // 跨度名称
-     
+
     @TableField("SpanKind")
+    @ColumnType(length = 20)
+    @ColumnComment("跨度类型")
     private String spanKind; // 跨度类型
-     
+
     @TableField("ServiceName")
+    @ColumnType(length = 50)
+    @ColumnComment("服务名称")
     private String serviceName; // 服务名称
-     
+
     @TableField("ResourceAttributes")
+    @ColumnType(length = 255)
+    @ColumnComment("资源属性")
     private Map<String, String> resourceAttributes; // 资源属性
-     
+
     @TableField("ScopeName")
+    @ColumnType(length = 50)
+    @ColumnComment("作用域名称")
     private String scopeName; // 作用域名称
-     
+
     @TableField("ScopeVersion")
+    @ColumnType(length = 10)
+    @ColumnComment("作用域版本")
     private String scopeVersion; // 作用域版本
-     
+
     @TableField("SpanAttributes")
+    @ColumnType(length = 255)
+    @ColumnComment("跨度属性")
     private Map<String, String> spanAttributes; // 跨度属性
 
     @TableField("Duration")
+    @ColumnType(length = 8)
+    @ColumnComment("持续时间")
     private Long duration; // 持续时间
 
     @TableField("StatusCode")
+    @ColumnType(length = 2)
+    @ColumnComment("状态码")
     private String statusCode; // 状态码
 
     @TableField("StatusMessage")
+    @ColumnType(length = 255)
+    @ColumnComment("状态消息")
     private String statusMessage; // 状态信息
 
     @TableField("Events")
+    @ColumnType(length = 255)
+    @ColumnComment("事件")
     private List<TelemetryEvent> events; // 事件列表
 
     @TableField("Links")
+    @ColumnType(length = 255)
+    @ColumnComment("链接")
     private List<TelemetryLink> links; // 链接列表
 
 
     public static class TelemetryLink {
 
         @TableField("TraceId")
+        @ColumnType(length = 36)
+        @ColumnComment("追踪ID")
         private String traceId;
         @TableField("SpanId")
+        @ColumnType(length = 64)
+        @ColumnComment("跨度标识")
         private String spanId;
         @TableField("TraceState")
+        @ColumnType(length = 2)
+        @ColumnComment("追踪状态")
         private String traceState;
         @TableField("Attributes")
+        @ColumnType(length = 255)
+        @ColumnComment("attributes")
         private Map<String, String> attributes;
 
-        public String getTraceId() {
-            return traceId;
-        }
-
-        public void setTraceId(String traceId) {
-            this.traceId = traceId;
-        }
-
-        public String getSpanId() {
-            return spanId;
-        }
-
-        public void setSpanId(String spanId) {
-            this.spanId = spanId;
-        }
-
-        public String getTraceState() {
-            return traceState;
-        }
-
-        public void setTraceState(String traceState) {
-            this.traceState = traceState;
-        }
-
-        public Map<String, String> getAttributes() {
-            return attributes;
-        }
-
-        public void setAttributes(Map<String, String> attributes) {
-            this.attributes = attributes;
-        }
     }
 
     public static class TelemetryEvent {
         @TableField("Timestamp")
+        @ColumnType(length = 20)
+        @ColumnComment("时间戳")
         private String timestamp;
         @TableField("Name")
+        @ColumnType(length = 255)
+        @ColumnComment("姓名")
         private String name;
         @TableField("Attributes")
+        @ColumnType(length = 255)
+        @ColumnComment("attributes")
         private Map<String, String> attributes;
-
-        public String getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Map<String, String> getAttributes() {
-            return attributes;
-        }
-
-        public void setAttributes(Map<String, String> attributes) {
-            this.attributes = attributes;
-        }
-    }
-
-
-        // 省略 getter 和 setter 方法
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getTraceId() {
-        return traceId;
-    }
-
-    public void setTraceId(String traceId) {
-        this.traceId = traceId;
-    }
-
-    public String getSpanId() {
-        return spanId;
-    }
-
-    public void setSpanId(String spanId) {
-        this.spanId = spanId;
-    }
-
-    public String getParentSpanId() {
-        return parentSpanId;
-    }
-
-    public void setParentSpanId(String parentSpanId) {
-        this.parentSpanId = parentSpanId;
-    }
-
-    public String getTraceState() {
-        return traceState;
-    }
-
-    public void setTraceState(String traceState) {
-        this.traceState = traceState;
-    }
-
-    public String getSpanName() {
-        return spanName;
-    }
-
-    public void setSpanName(String spanName) {
-        this.spanName = spanName;
-    }
-
-    public String getSpanKind() {
-        return spanKind;
-    }
-
-    public void setSpanKind(String spanKind) {
-        this.spanKind = spanKind;
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
-
-    public Map<String, String> getResourceAttributes() {
-        return resourceAttributes;
-    }
-
-    public void setResourceAttributes(Map<String, String> resourceAttributes) {
-        this.resourceAttributes = resourceAttributes;
-    }
-
-    public String getScopeName() {
-        return scopeName;
-    }
-
-    public void setScopeName(String scopeName) {
-        this.scopeName = scopeName;
-    }
-
-    public String getScopeVersion() {
-        return scopeVersion;
-    }
-
-    public void setScopeVersion(String scopeVersion) {
-        this.scopeVersion = scopeVersion;
-    }
-
-    public Map<String, String> getSpanAttributes() {
-        return spanAttributes;
-    }
-
-    public void setSpanAttributes(Map<String, String> spanAttributes) {
-        this.spanAttributes = spanAttributes;
-    }
-
-    public Long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Long duration) {
-        this.duration = duration;
-    }
-
-    public String getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getStatusMessage() {
-        return statusMessage;
-    }
-
-    public void setStatusMessage(String statusMessage) {
-        this.statusMessage = statusMessage;
-    }
-
-    public List<TelemetryEvent> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<TelemetryEvent> events) {
-        this.events = events;
-    }
-
-    public List<TelemetryLink> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<TelemetryLink> links) {
-        this.links = links;
     }
 }
 

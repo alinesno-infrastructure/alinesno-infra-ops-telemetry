@@ -18,6 +18,9 @@
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
         <alinesno.infra.version>${revision}</alinesno.infra.version>
+
+        <!-- 依赖包 -->
+        <fastjson.version>2.0.48</fastjson.version>
     </properties>
 
     <modules>
@@ -25,7 +28,7 @@
         <module>alinesno-infra-ops-telemetry-facade</module>  <!-- 接口和引用 -->
         <module>alinesno-infra-ops-telemetry-domain</module>  <!-- 领域服务 -->
         <module>alinesno-infra-ops-telemetry-adapter</module> <!-- 适配层 -->
-        <module>alinesno-infra-ops-telemetry-api</module>  <!-- 接口服务 -->
+        <module>alinesno-infra-ops-telemetry-gateway</module>  <!-- 接口服务 -->
         <module>alinesno-infra-ops-telemetry-client</module>  <!-- 对外引用 -->
         <module>alinesno-infra-ops-telemetry-boot</module>  <!-- 启动服务 -->
 
@@ -33,9 +36,25 @@
         <module>alinesno-infra-ops-telemetry-receiver</module>
 
         <!-- 前端服务
-        <module>alinesno-infra-ops-telemetry-admin</module>
+        <module>alinesno-infra-ops-telemetry-ui</module>
         -->
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
 </project>
+
+
 

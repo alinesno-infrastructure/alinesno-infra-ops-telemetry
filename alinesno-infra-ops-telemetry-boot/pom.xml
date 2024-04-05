@@ -37,7 +37,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.alinesno.infra.ops</groupId>
-			<artifactId>alinesno-infra-ops-telemetry-api</artifactId>
+			<artifactId>alinesno-infra-ops-telemetry-gateway</artifactId>
 			<version>${revision}</version>
 		</dependency>
 

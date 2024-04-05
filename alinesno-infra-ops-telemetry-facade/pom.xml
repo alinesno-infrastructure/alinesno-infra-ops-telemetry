@@ -28,6 +28,11 @@
 			<version>0.20.0-alpha</version>
 		</dependency>
 
+			<dependency>
+					<groupId>com.alibaba</groupId>
+					<artifactId>fastjson</artifactId>
+			</dependency>
+
 	</dependencies>
 
 </project>

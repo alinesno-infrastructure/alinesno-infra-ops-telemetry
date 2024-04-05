@@ -1,5 +1,5 @@
 {
-  "name": "alinesno-infra-ops-telemetry-admin",
+  "name": "alinesno-infra-ops-telemetry-ui",
   "version": "1.0.0",
   "description": "分布式链路跟踪服务",
   "author": "LuoXiaoDong",
